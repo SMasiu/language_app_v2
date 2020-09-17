@@ -1,0 +1,30 @@
+version: "3"
+services:
+  language__app_server:
+    container_name: language__app_server
+    restart: always
+    build: ./backend/
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/:/usr/src/app
+    depends_on:
+      - database
+    environment:
+      APP_DB_NAME: language_app
+      APP_DB_HOST: database
+      APP_DB_PORT: 5432
+      APP_DB_USERNAME: root
+      APP_DB_PASSWORD: qwerty
+      APP_PORT: 8080
+  database:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - 54320:5432
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: root
+      POSTGRES_DB: language_app
+    volumes:
+      - ./database:/var/lib/postgresql
