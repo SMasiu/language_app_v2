@@ -1,0 +1,21 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Word {
+  id: ID!
+  lang: String!
+  word: String!
+}
+
+type Query {
+  getWordById(id: String!): Word!
+}
+
+type Mutation {
+  addWord(word: WordInput!, lang: String!): Word!
+}
+
+input WordInput {
+  word: String!
+}
