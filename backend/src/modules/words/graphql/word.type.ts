@@ -1,8 +1,8 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class Word {
-  @Field(() => ID)
+  @Field(() => Int)
   id: string;
 
   @Field(() => String)
@@ -10,4 +10,7 @@ export class Word {
 
   @Field(() => String)
   word: string;
+
+  @Field(() => [String])
+  groups: string[];
 }

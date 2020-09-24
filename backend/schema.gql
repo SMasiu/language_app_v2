@@ -3,9 +3,10 @@
 # ------------------------------------------------------
 
 type Word {
-  id: ID!
+  id: Int!
   lang: String!
   word: String!
+  groups: [String!]!
 }
 
 type Query {
@@ -18,4 +19,7 @@ type Mutation {
 
 input WordInput {
   word: String!
+  group_1: String
+  group_2: String
+  group_3: String
 }

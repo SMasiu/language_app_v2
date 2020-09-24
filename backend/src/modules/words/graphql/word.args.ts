@@ -6,6 +6,15 @@ import { ValidateNested } from 'class-validator';
 export class WordInput {
   @Field(() => String)
   word: string;
+
+  @Field(() => String, { nullable: true })
+  group_1: string;
+
+  @Field(() => String, { nullable: true })
+  group_2: string;
+
+  @Field(() => String, { nullable: true })
+  group_3: string;
 }
 
 @ArgsType()
