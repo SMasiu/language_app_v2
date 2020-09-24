@@ -6,5 +6,6 @@ import { WordsService } from './services/words.service';
 @Module({
   providers: [WordsResolver, WordsService],
   imports: [DatabaseModule],
+  exports: [WordsService],
 })
 export class WordsModule {}

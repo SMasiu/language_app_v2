@@ -43,4 +43,17 @@ export class WordsService {
       )
     )[0];
   }
+
+  async getWordById(lang: string, wordId: number): Promise<WordModel | null> {
+    return (
+      (
+        await this.database.query<WordModel>(
+          `
+      SELECT * FROM words_${lang} WHERE id = $1
+    `,
+          [wordId],
+        )
+      )[0] || null
+    );
+  }
 }
