@@ -3,7 +3,7 @@ import { Field, ID, ObjectType, Int } from '@nestjs/graphql';
 @ObjectType()
 export class Word {
   @Field(() => Int)
-  id: string;
+  id: number;
 
   @Field(() => String)
   lang: string;

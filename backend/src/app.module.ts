@@ -4,6 +4,7 @@ import { join } from 'path';
 import { DatabaseModule } from './modules/database/database.module';
 import { WordsModule } from './modules/words/words.module';
 import { LanguageModule } from './modules/language/language.module';
+import { TranslationsModule } from './modules/translations/translations.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LanguageModule } from './modules/language/language.module';
     DatabaseModule,
     WordsModule,
     LanguageModule,
+    TranslationsModule,
   ],
 })
 export class AppModule {}

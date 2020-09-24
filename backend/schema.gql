@@ -9,12 +9,24 @@ type Word {
   groups: [String!]!
 }
 
+type TranslationWord {
+  word: Word!
+  lang: String!
+}
+
+type Translation {
+  id: Int!
+  word1: TranslationWord!
+  word2: TranslationWord!
+}
+
 type Query {
   getWordById(id: String!): Word!
 }
 
 type Mutation {
   addWord(word: WordInput!, lang: String!): Word!
+  addTranslation(from: TranslationWordInput!, to: TranslationWordInput!): Translation!
 }
 
 input WordInput {
@@ -22,4 +34,9 @@ input WordInput {
   group_1: String
   group_2: String
   group_3: String
+}
+
+input TranslationWordInput {
+  wordId: Int!
+  lang: String!
 }

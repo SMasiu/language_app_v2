@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import {
   availableLanguages,
   availableTranslations,
@@ -19,5 +19,17 @@ export class LanguageService {
 
   isLangAvaliable(lang: string): boolean {
     return availableLanguages.findIndex(l => l === lang) !== -1;
+  }
+
+  getTranslationPair(from: string, to: string) {
+    const translation = this.availableTranslations.find(
+      a => (a[0] === from && a[1] === to) || (a[0] === to && a[1] === from),
+    );
+
+    if (!translation) {
+      throw new InternalServerErrorException();
+    }
+
+    return translation;
   }
 }

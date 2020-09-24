@@ -30,7 +30,10 @@ export class WordsService {
     };
   }
 
-  async checkIfWordExists(lang: string, word: string): Promise<any> {
+  async checkIfWordExists(
+    lang: string,
+    word: string,
+  ): Promise<WordModel | undefined> {
     return (
       await this.database.query<WordModel>(
         `
