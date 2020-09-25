@@ -29,6 +29,23 @@ export class GroupsService {
     );
   }
 
+  async getGroupById(id: number): Promise<GroupModel | null> {
+    return (
+      await this.database.query<GroupModel>(
+        `
+      SELECT * FROM groups WHERE id = $1
+      `,
+        [id],
+      )
+    )[0];
+  }
+
+  async getAllGroups(): Promise<GroupModel[]> {
+    return this.database.query<GroupModel>(`
+      SELECT * FROM groups
+    `);
+  }
+
   async addGroupsToWord(lang: string, wordId: number, groupsIds: number[]) {
     const query = `INSERT INTO word_groups_${lang} (word_id, group_id) VALUES ${groupsIds
       .map((_, i) => `($1, $${i + 2})`)

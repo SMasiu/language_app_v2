@@ -27,7 +27,9 @@ type Translation {
 
 type Query {
   getWordById(id: Float!, lang: String!): Word
-  getTranslationById(id: Int!, from: String!, to: String!): Translation!
+  getGroupById(id: Float!): Group!
+  getAllGroups: [Group!]!
+  getTranslationById(id: Int!, from: String!, to: String!): Translation
 }
 
 type Mutation {

@@ -15,7 +15,7 @@ export class TranslationsResolver {
     return await this.translationService.addTranslation(args);
   }
 
-  @Query(() => Translation)
+  @Query(() => Translation, { nullable: true })
   async getTranslationById(@Args() args: GetTranslationByIdArgs) {
     return await this.translationService.getTranslationById(args);
   }

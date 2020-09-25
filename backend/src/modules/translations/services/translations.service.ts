@@ -77,7 +77,11 @@ export class TranslationsService {
     model: TranslationModel,
     from: string,
     to: string,
-  ): TranslationResponse {
+  ): TranslationResponse | null {
+    if (!model) {
+      return null;
+    }
+
     return {
       id: model.id,
       word1: {
