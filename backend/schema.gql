@@ -25,12 +25,18 @@ type Translation {
   word2: TranslationWord!
 }
 
+type Translate {
+  word: String!
+  wordTranslations: [Word!]!
+}
+
 type Query {
   getWordById(id: Int!, lang: String!): Word
   searchWords(search: String!, lang: String!): [Word!]!
   getGroupById(id: Int!): Group
   getAllGroups: [Group!]!
   getTranslationById(id: Int!, from: String!, to: String!): Translation
+  translateWord(from: String!, to: String!, word: String!): Translate!
 }
 
 type Mutation {
