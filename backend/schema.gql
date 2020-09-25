@@ -26,9 +26,9 @@ type Translation {
 }
 
 type Query {
-  getWordById(id: Float!, lang: String!): Word
+  getWordById(id: Int!, lang: String!): Word
   searchWords(search: String!, lang: String!): [Word!]!
-  getGroupById(id: Float!): Group!
+  getGroupById(id: Int!): Group
   getAllGroups: [Group!]!
   getTranslationById(id: Int!, from: String!, to: String!): Translation
 }

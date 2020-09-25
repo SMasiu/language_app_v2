@@ -31,13 +31,15 @@ export class GroupsService {
 
   async getGroupById(id: number): Promise<GroupModel | null> {
     return (
-      await this.database.query<GroupModel>(
-        `
+      (
+        await this.database.query<GroupModel>(
+          `
       SELECT * FROM groups WHERE id = $1
       `,
-        [id],
-      )
-    )[0];
+          [id],
+        )
+      )[0] || null
+    );
   }
 
   async getAllGroups(): Promise<GroupModel[]> {

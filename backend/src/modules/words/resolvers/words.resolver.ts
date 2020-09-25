@@ -5,6 +5,7 @@ import {
   Resolver,
   ResolveField,
   Parent,
+  Int,
 } from '@nestjs/graphql';
 import { WordArgs } from '../graphql/word.args';
 import { Word } from '../graphql/word.type';
@@ -20,7 +21,10 @@ export class WordsResolver {
   ) {}
 
   @Query(() => Word, { nullable: true })
-  async getWordById(@Args('lang') lang: string, @Args('id') id: number) {
+  async getWordById(
+    @Args('lang') lang: string,
+    @Args({ type: () => Int, name: 'id' }) id: number,
+  ) {
     return await this.wordsService.getWordById(lang, id);
   }
 

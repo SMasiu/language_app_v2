@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Int } from '@nestjs/graphql';
 import { Group } from '../graphql/group.type';
 import { GroupsService } from '../services/groups.service';
 import { GroupArgs } from '../graphql/group.args';
@@ -12,8 +12,8 @@ export class GroupsResolver {
     return await this.groupService.createGroup(group);
   }
 
-  @Query(() => Group)
-  async getGroupById(@Args('id') id: number) {
+  @Query(() => Group, { nullable: true })
+  async getGroupById(@Args({ name: 'id', type: () => Int }) id: number) {
     return await this.groupService.getGroupById(id);
   }
 
