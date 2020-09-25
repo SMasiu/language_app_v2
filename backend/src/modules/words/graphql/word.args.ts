@@ -1,4 +1,4 @@
-import { ArgsType, Field, InputType } from '@nestjs/graphql';
+import { ArgsType, Field, InputType, Int } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
 import {
   ValidateNested,
@@ -15,23 +15,10 @@ export class WordInput {
   @MaxLength(25)
   word: string;
 
-  @Field(() => String, { nullable: true })
-  @ValidateIf(o => o.group_1 !== null && o.group_1 !== undefined)
-  @IsNotEmpty()
-  @MaxLength(25)
-  group_1: string;
-
-  @Field(() => String, { nullable: true })
-  @ValidateIf(o => o.group_2 !== null && o.group_2 !== undefined)
-  @IsNotEmpty()
-  @MaxLength(25)
-  group_2: string;
-
-  @Field(() => String, { nullable: true })
-  @ValidateIf(o => o.group_3 !== null && o.group_3 !== undefined)
-  @IsNotEmpty()
-  @MaxLength(25)
-  group_3: string;
+  @Field(() => [Int], { nullable: true })
+  @ValidateIf(o => o.groups !== null && o.groups !== undefined)
+  @IsNotEmpty({ each: true })
+  groups: number[];
 }
 
 @ArgsType()

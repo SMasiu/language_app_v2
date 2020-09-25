@@ -13,8 +13,11 @@ export class DatabaseProviderService {
   async setUpDatabase() {
     await this.createPool();
 
+    await this.addGroupsTable();
+
     this.languageService.avaliableLanguages.forEach(async lang => {
       await this.addWordsTable(lang);
+      await this.addWordGroupsTable(lang);
     });
 
     this.languageService.availableTranslations.forEach(
@@ -43,14 +46,31 @@ export class DatabaseProviderService {
     console.log('Successfully conected to database...');
   }
 
+  async addGroupsTable() {
+    return this.pool.query(`
+      CREATE TABLE IF NOT EXISTS groups (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(25) NOT NULL UNIQUE
+      )
+  `);
+  }
+
   async addWordsTable(lang: string) {
     return this.pool.query(`
         CREATE TABLE IF NOT EXISTS words_${lang} (
           id SERIAL PRIMARY KEY,
-          word VARCHAR(25) NOT NULL UNIQUE,
-          group_1 VARCHAR(25),
-          group_2 VARCHAR(25),
-          group_3 VARCHAR(25)
+          word VARCHAR(25) NOT NULL UNIQUE
+        )
+      `);
+  }
+
+  addWordGroupsTable(lang: string) {
+    return this.pool.query(`
+        CREATE TABLE IF NOT EXISTS word_groups_${lang} (
+          word_id INT NOT NULL,
+          group_id INT NOT NULL,
+          FOREIGN KEY (word_id) REFERENCES words_${lang}(id) ON DELETE CASCADE,
+          FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
         )
       `);
   }

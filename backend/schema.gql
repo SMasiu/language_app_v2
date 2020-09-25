@@ -2,11 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Group {
+  id: Int!
+  name: String!
+}
+
 type Word {
   id: Int!
   lang: String!
   word: String!
-  groups: [String!]!
+  groups: [Group!]!
 }
 
 type TranslationWord {
@@ -21,19 +26,22 @@ type Translation {
 }
 
 type Query {
-  getWordById(id: String!): Word!
+  getWordById(id: Float!, lang: String!): Word
 }
 
 type Mutation {
   addWord(word: WordInput!, lang: String!): Word!
+  addGroup(group: GroupInput!): Group!
   addTranslation(from: TranslationWordInput!, to: TranslationWordInput!): Translation!
 }
 
 input WordInput {
   word: String!
-  group_1: String
-  group_2: String
-  group_3: String
+  groups: [Int!]
+}
+
+input GroupInput {
+  name: String!
 }
 
 input TranslationWordInput {

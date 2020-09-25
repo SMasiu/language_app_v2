@@ -5,6 +5,7 @@ import { DatabaseModule } from './modules/database/database.module';
 import { WordsModule } from './modules/words/words.module';
 import { LanguageModule } from './modules/language/language.module';
 import { TranslationsModule } from './modules/translations/translations.module';
+import { GroupsModule } from './modules/groups/groups.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { TranslationsModule } from './modules/translations/translations.module';
     WordsModule,
     LanguageModule,
     TranslationsModule,
+    GroupsModule,
   ],
 })
 export class AppModule {}
