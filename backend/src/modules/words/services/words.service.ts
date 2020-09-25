@@ -71,4 +71,18 @@ export class WordsService {
 
     return word ? { ...word, lang } : null;
   }
+
+  async searchWords(
+    lang: string,
+    search: string,
+  ): Promise<Omit<Word, 'groups'>[]> {
+    return (
+      await this.database.query<WordModel>(
+        `
+      SELECT * FROM words_${lang} WHERE word LIKE $1
+    `,
+        [`${search}%`],
+      )
+    ).map(w => ({ ...w, lang }));
+  }
 }

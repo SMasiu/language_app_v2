@@ -24,6 +24,14 @@ export class WordsResolver {
     return await this.wordsService.getWordById(lang, id);
   }
 
+  @Query(() => [Word])
+  async searchWords(
+    @Args('lang') lang: string,
+    @Args('search') search: string,
+  ) {
+    return await this.wordsService.searchWords(lang, search);
+  }
+
   @Mutation(() => Word)
   async addWord(@Args() args: WordArgs) {
     return await this.wordsService.addWord(args);
