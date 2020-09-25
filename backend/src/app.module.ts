@@ -6,6 +6,7 @@ import { WordsModule } from './modules/words/words.module';
 import { LanguageModule } from './modules/language/language.module';
 import { TranslationsModule } from './modules/translations/translations.module';
 import { GroupsModule } from './modules/groups/groups.module';
+import { TranslateModule } from './modules/translate/translate.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { GroupsModule } from './modules/groups/groups.module';
     LanguageModule,
     TranslationsModule,
     GroupsModule,
+    TranslateModule,
   ],
 })
 export class AppModule {}
