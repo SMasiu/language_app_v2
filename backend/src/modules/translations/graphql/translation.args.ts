@@ -25,3 +25,17 @@ export class TranslationsArgs {
   @ValidateNested({ each: true })
   to: TranslationWordInput;
 }
+
+@ArgsType()
+export class GetTranslationByIdArgs {
+  @Field(() => Int)
+  id: number;
+
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  from: string;
+
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  to: string;
+}

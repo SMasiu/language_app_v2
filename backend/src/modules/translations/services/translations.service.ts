@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/modules/database/services/database.service';
 import { LanguageService } from 'src/modules/language/services/language.service';
-import { TranslationsArgs } from '../graphql/translation.args';
+import {
+  TranslationsArgs,
+  GetTranslationByIdArgs,
+} from '../graphql/translation.args';
 import {
   TranslationModel,
   TranslationResponse,
@@ -40,6 +43,33 @@ export class TranslationsService {
       )[0],
       from.lang,
       to.lang,
+    );
+  }
+
+  async getTranslationById({
+    id,
+    from,
+    to,
+  }: GetTranslationByIdArgs): Promise<TranslationResponse> {
+    const translation = this.languageService.getTranslationPair(from, to);
+
+    if (translation[0] !== from) {
+      let swap = from;
+      from = to;
+      to = swap;
+    }
+
+    return this.mapModelToResponse(
+      (
+        await this.database.query<TranslationModel>(
+          `
+          SELECT * FROM translations_${from}_${to} WHERE id = $1
+        `,
+          [id],
+        )
+      )[0],
+      from,
+      to,
     );
   }
 
