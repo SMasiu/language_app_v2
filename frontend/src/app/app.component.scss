@@ -1,0 +1,31 @@
+.app-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.aside-wrapper {
+  padding: 25px 0;
+  min-width: 250px;
+}
+
+.page-wrapper {
+  padding: 25px;
+}
+
+.page-header {
+  display: flex;
+}
+
+.page-heading {
+  margin-left: 25px;
+}
+
+.app-header {
+  text-align: center;
+  span {
+    display: block;
+  }
+}

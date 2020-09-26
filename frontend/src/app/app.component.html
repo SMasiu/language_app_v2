@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="app-container" *ngIf="true">
+  <mat-sidenav opened mode="side">
+    <aside class="aside-wrapper">
+      <header class="app-header">
+        <h1><span>Language</span><span>app</span></h1>
+      </header>
+      <mat-action-list>
+        <button *ngFor="let item of navigation" mat-list-item [routerLink]="item.link">
+          {{ item.name }}
+        </button>
+      </mat-action-list>
+    </aside>
+  </mat-sidenav>
+  <section class="page-wrapper">
+    <header class="page-header">
+      <button mat-mini-fab color="accent" (click)="handleBackClick()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <h2 class="page-heading">{{ pageTitle }}</h2>
+    </header>
+    <router-outlet></router-outlet>
+  </section>
+</mat-sidenav-container>
