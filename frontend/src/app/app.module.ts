@@ -16,7 +16,10 @@ import { MatInputModule } from '@angular/material/input'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { HttpClientModule } from '@angular/common/http'
+import { MatSelectModule } from '@angular/material/select'
 import { GraphQLModule } from './graphql.module'
+import { MatChipsModule } from '@angular/material/chips'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
 @NgModule({
   declarations: [AppComponent, AddWordComponent, AddTranslationComponent, AddGroupComponent],
@@ -34,7 +37,10 @@ import { GraphQLModule } from './graphql.module'
     ReactiveFormsModule,
     GraphQLModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

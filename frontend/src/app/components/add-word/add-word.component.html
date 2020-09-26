@@ -3,9 +3,50 @@
     <header class="form-header">
       <h3>Add word</h3>
     </header>
+
     <mat-form-field appearance="outline" color="accent">
       <mat-label>Word</mat-label>
       <input matInput placeholder="Word" formControlName="word" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Language</mat-label>
+      <mat-select required formControlName="lang">
+        <mat-option
+          value="volvo"
+          *ngFor="let lang of languagesService.availableLanguages"
+          [value]="lang"
+        >
+          {{ lang }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-chip-list #chipList>
+        <mat-chip
+          *ngFor="let group of selectedGroups"
+          [selectable]="true"
+          [removable]="true"
+          (removed)="handleGroupRemove(group)"
+        >
+          {{ group.name }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="New group..."
+          #groupInput
+          [formControl]="groupCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        />
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleGroupSelect($event)">
+        <mat-option *ngFor="let group of filtredGroups" [value]="group.id">
+          {{ group.name }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <button mat-raised-button color="primary" [disabled]="form.invalid">Add word</button>

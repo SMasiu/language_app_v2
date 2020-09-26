@@ -5,6 +5,7 @@ import { take, map } from 'rxjs/operators'
 import { Group, GroupInput } from '../types/group.types'
 import { WordInput, Word } from '../types/word.types'
 import { addWordQuery } from '../queries/add-word.query'
+import { getGroupsQuery } from '../queries/get-groups.query'
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,15 @@ export class ApiService {
         take(1),
         map((r) => r.data.addWord)
       )
+      .toPromise()
+  }
+
+  getAllGrops(): Promise<Group[]> {
+    return this.apollo
+      .query<{ getAllGroups: Group[] }>({
+        query: getGroupsQuery
+      })
+      .pipe((take(1), map((r) => r.data.getAllGroups)))
       .toPromise()
   }
 }
