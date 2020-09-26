@@ -33,4 +33,36 @@ export class TestsService {
       words: wordIdsNumbers,
     };
   }
+
+  async getTestById(id: number) {
+    const test = (
+      await this.database.query<TestModel>(
+        `
+      SELECT * FROM tests WHERE id = $1
+    `,
+        [id],
+      )
+    )[0];
+
+    if (!test) {
+      return null;
+    }
+
+    return this.mapTestModelToResponse(test);
+  }
+
+  async getAllTests() {
+    return (
+      await this.database.query<TestModel>(`SELECT * FROM tests`)
+    ).map(t => this.mapTestModelToResponse(t));
+  }
+
+  mapTestModelToResponse({ id, lang_from, lang_to, words }: TestModel) {
+    return {
+      id: id,
+      langFrom: lang_from,
+      langTo: lang_to,
+      words: words.split(',').map(id => parseInt(id)),
+    };
+  }
 }
