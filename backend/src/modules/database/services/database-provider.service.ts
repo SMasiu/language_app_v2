@@ -14,6 +14,7 @@ export class DatabaseProviderService {
     await this.connectToDatabase();
 
     await this.addGroupsTable();
+    await this.addTestsTable();
 
     this.languageService.avaliableLanguages.forEach(async lang => {
       await this.addWordsTable(lang);
@@ -58,6 +59,16 @@ export class DatabaseProviderService {
       database: APP_DB_NAME,
     }).connect();
     console.log('Successfully conected to database...');
+  }
+
+  async addTestsTable() {
+    return this.pool.query(`
+      CREATE TABLE IF NOT EXISTS tests (
+        id SERIAL PRIMARY KEY,
+        lang VARCHAR(25) NOT NULL,
+        words TEXT NOT NULL
+      )
+  `);
   }
 
   async addGroupsTable() {
