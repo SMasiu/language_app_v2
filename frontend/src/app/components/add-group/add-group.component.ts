@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms'
+import { ApiService } from 'src/app/services/api.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-add-group',
@@ -6,7 +9,35 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./add-group.component.scss']
 })
 export class AddGroupComponent implements OnInit {
-  constructor() {}
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective
 
-  ngOnInit(): void {}
+  form: FormGroup
+
+  constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
+
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.maxLength(25)])
+    })
+  }
+
+  async handleSubmit() {
+    let action: string
+
+    try {
+      const group = await this.apiService.addGroup({
+        ...this.form.value
+      })
+
+      action = `Group: ${group.name} was successfully created`
+    } catch (err) {
+      action = `Something went wrong: ${err.message}`
+    }
+
+    this.formGroupDirective.resetForm()
+
+    this.snackBar.open(action, 'Close', {
+      duration: 5000
+    })
+  }
 }

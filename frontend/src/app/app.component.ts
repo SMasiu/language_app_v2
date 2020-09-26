@@ -23,7 +23,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        this.pageTitle = val.url
+        let url = val.url === '/' ? 'groups / add' : val.url
+        this.pageTitle = url
           .split('/')
           .filter((v) => v)
           .toString()

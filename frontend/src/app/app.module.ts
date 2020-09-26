@@ -11,6 +11,12 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { MatListModule } from '@angular/material/list'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { HttpClientModule } from '@angular/common/http'
+import { GraphQLModule } from './graphql.module'
 
 @NgModule({
   declarations: [AppComponent, AddWordComponent, AddTranslationComponent, AddGroupComponent],
@@ -21,7 +27,14 @@ import { MatListModule } from '@angular/material/list'
     MatSidenavModule,
     MatIconModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    GraphQLModule,
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
