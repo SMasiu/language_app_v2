@@ -17,14 +17,22 @@
 
 .page-header {
   display: flex;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
 .page-heading {
+  margin: 0;
   margin-left: 25px;
 }
 
 .app-header {
   text-align: center;
+
+  h1 {
+    margin: 0;
+  }
+
   span {
     display: block;
   }
