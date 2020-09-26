@@ -80,12 +80,14 @@ export class AddWordComponent implements OnInit {
       this.selectedGroups.findIndex((g) => g.id === group.id),
       1
     )
+    this.filterGroupsToShow(this.groupCtrl.value)
   }
 
   handleGroupSelect(event: MatAutocompleteSelectedEvent): void {
     this.selectedGroups.push(this.groups.find((g) => g.id === event.option.value))
     this.groupInput.nativeElement.value = ''
     this.groupCtrl.setValue(null)
+    this.filterGroupsToShow('')
   }
 
   filterGroupsToShow(val: string) {
