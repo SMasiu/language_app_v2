@@ -49,10 +49,13 @@ export class GroupsService {
   }
 
   async addGroupsToWord(lang: string, wordId: number, groupsIds: number[]) {
-    const query = `INSERT INTO word_groups_${lang} (word_id, group_id) VALUES ${groupsIds
-      .map((_, i) => `($1, $${i + 2})`)
-      .toString()}`;
-    const args = [wordId, ...groupsIds];
-    return this.database.query(query, args);
+    if (groupsIds && groupsIds.length) {
+      const query = `INSERT INTO word_groups_${lang} (word_id, group_id) VALUES ${groupsIds
+        .map((_, i) => `($1, $${i + 2})`)
+        .toString()}`;
+      const args = [wordId, ...groupsIds];
+      return this.database.query(query, args);
+    }
+    return [];
   }
 }
