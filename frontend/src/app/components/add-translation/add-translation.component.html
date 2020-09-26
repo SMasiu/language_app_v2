@@ -1,1 +1,54 @@
-<p>add-translation works!</p>
+<div class="form-wrapper">
+  <form class="form" [formGroup]="form" (submit)="handleSubmit()">
+    <header class="form-header">
+      <h3>Add translation</h3>
+    </header>
+    <section class="lang-picker">
+      <p>From</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Language</mat-label>
+        <mat-select required formControlName="fromLang">
+          <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
+            {{ lang }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>To</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Language</mat-label>
+        <mat-select required formControlName="toLang">
+          <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
+            {{ lang }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section class="words-picker">
+      <section class="divider">
+        <p class="text-info">Select word</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Word</mat-label>
+          <mat-select required>
+            <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
+              {{ lang }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+      <section>
+        <p class="text-info">Select word</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Word</mat-label>
+          <mat-select required>
+            <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
+              {{ lang }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+    </section>
+    <button mat-raised-button color="primary" class="form-submit" [disabled]="form.invalid">
+      Add translation
+    </button>
+  </form>
+</div>

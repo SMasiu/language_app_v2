@@ -12,11 +12,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Language</mat-label>
       <mat-select required formControlName="lang">
-        <mat-option
-          value="volvo"
-          *ngFor="let lang of languagesService.availableLanguages"
-          [value]="lang"
-        >
+        <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
           {{ lang }}
         </mat-option>
       </mat-select>

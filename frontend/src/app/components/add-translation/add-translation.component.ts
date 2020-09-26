@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core'
+import { LanguagesService } from 'src/app/services/languages.service'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-add-translation',
@@ -6,7 +8,18 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./add-translation.component.scss']
 })
 export class AddTranslationComponent implements OnInit {
-  constructor() {}
+  form: FormGroup
 
-  ngOnInit(): void {}
+  constructor(public languagesService: LanguagesService) {}
+
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      fromLang: new FormControl('', [Validators.required]),
+      toLang: new FormControl('', [Validators.required])
+    })
+  }
+
+  handleSubmit() {
+    console.log(this.form.value)
+  }
 }

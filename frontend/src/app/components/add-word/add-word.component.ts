@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core'
 import { FormGroupDirective, FormGroup, FormControl, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ApiService } from 'src/app/services/api.service'
@@ -7,7 +7,7 @@ import { GroupsService } from 'src/app/services/groups.service'
 import { Group } from 'src/app/types/group.types'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { filter } from 'rxjs/operators'
+import { Word } from 'src/app/types/word.types'
 
 @Component({
   selector: 'app-add-word',
@@ -17,6 +17,9 @@ import { filter } from 'rxjs/operators'
 export class AddWordComponent implements OnInit {
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective
   @ViewChild('groupInput') groupInput: ElementRef<HTMLInputElement>
+
+  @Output()
+  create: EventEmitter<Word> = new EventEmitter()
 
   form: FormGroup
 
@@ -63,6 +66,8 @@ export class AddWordComponent implements OnInit {
       })
 
       action = `Word: ${newWord.word} was successfully created`
+
+      this.create.emit(newWord)
     } catch (err) {
       action = `Something went wrong: ${err.message}`
     }
