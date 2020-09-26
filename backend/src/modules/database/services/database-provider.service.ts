@@ -11,7 +11,7 @@ export class DatabaseProviderService {
   }
 
   async setUpDatabase() {
-    await this.createPool();
+    await this.connectToDatabase();
 
     await this.addGroupsTable();
 
@@ -25,6 +25,20 @@ export class DatabaseProviderService {
         await this.addTranslateTable(lang1, lang2);
       },
     );
+  }
+
+  async connectToDatabase(): Promise<boolean> {
+    return new Promise(resolve => {
+      const timer = setInterval(async () => {
+        try {
+          await this.createPool();
+          clearInterval(timer);
+          return resolve(true);
+        } catch {
+          console.log('Database refused connection. Retrying...');
+        }
+      }, 5000);
+    });
   }
 
   async createPool() {
