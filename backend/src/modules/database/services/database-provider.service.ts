@@ -38,7 +38,7 @@ export class DatabaseProviderService {
         } catch {
           console.log('Database refused connection. Retrying...');
         }
-      }, 5000);
+      }, 2500);
     });
   }
 
@@ -65,7 +65,8 @@ export class DatabaseProviderService {
     return this.pool.query(`
       CREATE TABLE IF NOT EXISTS tests (
         id SERIAL PRIMARY KEY,
-        lang VARCHAR(25) NOT NULL,
+        lang_from VARCHAR(25) NOT NULL,
+        lang_to VARCHAR(25) NOT NULL,
         words TEXT NOT NULL
       )
   `);

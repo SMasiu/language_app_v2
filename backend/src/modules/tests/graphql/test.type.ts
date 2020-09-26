@@ -6,8 +6,11 @@ export class Test {
   id: number;
 
   @Field(() => String)
-  lang: string;
+  langFrom: string;
 
-  @Field(() => Int)
+  @Field(() => String)
+  langTo: string;
+
+  @Field(() => [Int])
   words: number[];
 }

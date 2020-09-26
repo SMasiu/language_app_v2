@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/modules/database/services/database.service';
 import { WordArgs } from '../graphql/word.args';
-import { WordModel } from '../types/word.types';
+import { WordModel, GetWordsGroupOptions } from '../types/word.types';
 import { GroupsService } from 'src/modules/groups/services/groups.service';
 import { Word } from '../graphql/word.type';
 
@@ -84,5 +84,33 @@ export class WordsService {
         [`${search}%`],
       )
     ).map(w => ({ ...w, lang }));
+  }
+
+  async getWordsGroup({
+    skip,
+    limit,
+    groups,
+  }: GetWordsGroupOptions): Promise<{ id: number }[]> {
+    const args: any[] = [skip, limit];
+    const groupsExists = groups && groups.length;
+    groupsExists && args.push(`{${groups.toString()}}`);
+    return this.database.query<{ id: number }>(
+      `
+      SELECT DISTINCT w.id
+      FROM public.words_en w
+      
+      ${
+        groupsExists
+          ? `
+            FULL JOIN word_groups_en g ON w.id = g.word_id
+            WHERE group_id = ANY ($3::int[])
+          `
+          : ''
+      }
+      OFFSET $1
+      LIMIT $2
+    `,
+      args,
+    );
   }
 }

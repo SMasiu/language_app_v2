@@ -30,6 +30,13 @@ type Translate {
   wordTranslations: [Word!]!
 }
 
+type Test {
+  id: Int!
+  langFrom: String!
+  langTo: String!
+  words: [Int!]!
+}
+
 type Query {
   getWordById(id: Int!, lang: String!): Word
   searchWords(search: String!, lang: String!): [Word!]!
@@ -43,6 +50,7 @@ type Mutation {
   addWord(word: WordInput!, lang: String!): Word!
   addGroup(group: GroupInput!): Group!
   addTranslation(from: TranslationWordInput!, to: TranslationWordInput!): Translation!
+  createTest(testParams: CreateTestInput!): Test!
 }
 
 input WordInput {
@@ -57,4 +65,12 @@ input GroupInput {
 input TranslationWordInput {
   wordId: Int!
   lang: String!
+}
+
+input CreateTestInput {
+  groups: [Int!] = null
+  limit: Int = 25
+  skip: Int = 0
+  langFrom: String!
+  langTo: String!
 }
