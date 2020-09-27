@@ -19,11 +19,20 @@ import { HttpClientModule } from '@angular/common/http'
 import { MatSelectModule } from '@angular/material/select'
 import { GraphQLModule } from './graphql.module'
 import { MatChipsModule } from '@angular/material/chips'
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { AddTestComponent } from './components/add-test/add-test.component'
+import { TestsListComponent } from './components/tests-list/tests-list.component'
+import { MatTableModule } from '@angular/material/table'
 
 @NgModule({
-  declarations: [AppComponent, AddWordComponent, AddTranslationComponent, AddGroupComponent, AddTestComponent],
+  declarations: [
+    AppComponent,
+    AddWordComponent,
+    AddTranslationComponent,
+    AddGroupComponent,
+    AddTestComponent,
+    TestsListComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,7 +50,8 @@ import { AddTestComponent } from './components/add-test/add-test.component'
     MatSnackBarModule,
     MatSelectModule,
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

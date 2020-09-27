@@ -11,6 +11,7 @@ import { Translation, TranslationWordOptions } from '../types/translation.types'
 import { addTranslationQuery } from '../queries/add-translation.query'
 import { TestParams, Test } from '../types/test.types'
 import { addTestQuery } from '../queries/add-test.query'
+import { getTestsQuery } from '../queries/get-tests.query'
 
 @Injectable({
   providedIn: 'root'
@@ -104,6 +105,18 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data.createTest)
+      )
+      .toPromise()
+  }
+
+  getTests(): Promise<Test[]> {
+    return this.apollo
+      .query<{ getAllTests: Test[] }>({
+        query: getTestsQuery
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.getAllTests)
       )
       .toPromise()
   }

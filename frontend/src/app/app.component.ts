@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
     { name: 'Add word', link: '/words/add' },
     { name: 'Add translation', link: '/translations/add' },
     { name: 'Add group', link: '/groups/add' },
+    { name: 'Tests', link: '/tests' },
     { name: 'Add test', link: '/tests/add' }
   ]
 

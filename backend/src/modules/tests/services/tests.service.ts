@@ -12,8 +12,6 @@ export class TestsService {
   ) {}
 
   async createTest(testParams: CreateTestInput) {
-    console.log(testParams);
-
     const wordIds = await this.wordsService.getWordsGroup({ ...testParams });
     const wordIdsNumbers = wordIds.map(w => w.id);
 
