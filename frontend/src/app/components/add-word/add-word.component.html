@@ -9,7 +9,7 @@
       <input matInput placeholder="Word" formControlName="word" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" *ngIf="!langInp">
       <mat-label>Language</mat-label>
       <mat-select required formControlName="lang">
         <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">

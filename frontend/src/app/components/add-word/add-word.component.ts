@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter,
+  Input
+} from '@angular/core'
 import { FormGroupDirective, FormGroup, FormControl, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ApiService } from 'src/app/services/api.service'
@@ -22,6 +30,12 @@ export class AddWordComponent implements OnInit {
   @Output()
   create: EventEmitter<Word> = new EventEmitter()
 
+  @Input()
+  langInp: string
+
+  @Input()
+  wordInp: string
+
   form: FormGroup
 
   groups: Group[] = []
@@ -43,8 +57,8 @@ export class AddWordComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      word: new FormControl('', [Validators.required, Validators.maxLength(25)]),
-      lang: new FormControl('')
+      word: new FormControl(this.wordInp, [Validators.required, Validators.maxLength(25)]),
+      lang: new FormControl(this.langInp || '')
     })
 
     this.ctrlSub = this.groupCtrl.valueChanges.subscribe((val) => {

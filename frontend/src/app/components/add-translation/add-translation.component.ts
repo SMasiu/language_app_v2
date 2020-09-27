@@ -26,6 +26,12 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
   selectedFromWord: Word
   selectedToWord: Word
 
+  showAddFromWord: boolean = false
+  showAddToWord: boolean = false
+
+  lastFromWord: string = ''
+  lastToWord: string = ''
+
   constructor(public languagesService: LanguagesService, private apiService: ApiService) {}
 
   ngOnInit(): void {
@@ -34,24 +40,44 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
       toLang: new FormControl('', [Validators.required])
     })
 
-    this.wordFromCtrl.valueChanges.pipe(debounceTime(100)).subscribe((val: string | Word) => {
-      if (typeof val === 'string') {
-        this.selectedFromWord = null
-      }
-      console.log(val)
-    })
-    this.wordToCtrl.valueChanges.pipe(debounceTime(100)).subscribe((val: string | Word) => {
-      if (typeof val === 'string') {
-        this.selectedToWord = null
-      }
-      console.log(val)
-    })
+    this.wordFromCtrl.valueChanges
+      .pipe(debounceTime(100))
+      .subscribe(async (val: string | Word | { toggler: boolean }) => {
+        if (typeof val === 'string') {
+          this.selectedFromWord = null
+          this.lastFromWord = val
+          this.wordsFromList = [
+            ...(await this.apiService.searchWords(this.form.value.fromLang, val))
+          ]
+        } else if (!(val as any).toggler) {
+          const { word } = val as Word
+          this.lastFromWord = word
+          this.wordsFromList = [
+            ...(await this.apiService.searchWords(this.form.value.fromLang, word))
+          ]
+        }
+      })
+    this.wordToCtrl.valueChanges
+      .pipe(debounceTime(100))
+      .subscribe(async (val: string | Word | { toggler: boolean }) => {
+        if (typeof val === 'string') {
+          this.selectedToWord = null
+          this.lastToWord = val
+          this.wordsToList = [...(await this.apiService.searchWords(this.form.value.toLang, val))]
+        } else if (!(val as any).toggler) {
+          const { word } = val as Word
+          this.lastToWord = word
+          this.wordsToList = [...(await this.apiService.searchWords(this.form.value.toLang, word))]
+        }
+      })
     this.formFromLangSub = this.form.controls.fromLang.valueChanges.subscribe(
       async (lang: string) => {
+        this.wordFromCtrl.setValue('')
         this.wordsFromList = [...(await this.apiService.searchWords(lang, this.wordFromCtrl.value))]
       }
     )
     this.formToLangSub = this.form.controls.toLang.valueChanges.subscribe(async (lang: string) => {
+      this.wordToCtrl.setValue('')
       this.wordsToList = [...(await this.apiService.searchWords(lang, this.wordToCtrl.value))]
     })
   }
@@ -79,5 +105,25 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
 
   selectFromWord(word: Word) {
     this.selectedFromWord = word
+  }
+
+  toggleShowFromAddForm() {
+    this.showAddFromWord = !this.showAddFromWord
+  }
+
+  toggleShowToAddForm() {
+    this.showAddToWord = !this.showAddToWord
+  }
+
+  handleWordFromCreated(word: Word) {
+    this.toggleShowFromAddForm()
+    this.selectedFromWord = { ...word }
+    this.wordFromCtrl.setValue({ ...word })
+  }
+
+  handleWordToCreated(word: Word) {
+    this.toggleShowToAddForm()
+    this.selectedToWord = { ...word }
+    this.wordToCtrl.setValue({ ...word })
   }
 }

@@ -52,9 +52,20 @@
 }
 
 .form-submit {
+  margin-top: 25px;
   width: 100%;
 }
 
 .select-btn {
   width: 100%;
+}
+
+.add-word-back-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.add-word-back {
+  width: 90%;
+  margin: 15px 0;
 }
