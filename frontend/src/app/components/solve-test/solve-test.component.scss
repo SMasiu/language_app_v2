@@ -1,0 +1,17 @@
+.test-header {
+  text-align: center;
+  h3 {
+    font-size: 22px;
+  }
+}
+
+.progress-wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 25px;
+  align-items: center;
+}
+
+.progress-text {
+  margin: 0;
+}

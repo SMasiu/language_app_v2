@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
           .split('/')
           .filter((v) => v)
           .toString()
-          .replace(/\,/, ' / ')
+          .replace(/\,/g, ' / ')
       }
     })
   }

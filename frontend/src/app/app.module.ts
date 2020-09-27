@@ -23,6 +23,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { AddTestComponent } from './components/add-test/add-test.component'
 import { TestsListComponent } from './components/tests-list/tests-list.component'
 import { MatTableModule } from '@angular/material/table'
+import { SolveTestComponent } from './components/solve-test/solve-test.component'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { MatTableModule } from '@angular/material/table'
     AddTranslationComponent,
     AddGroupComponent,
     AddTestComponent,
-    TestsListComponent
+    TestsListComponent,
+    SolveTestComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import { MatTableModule } from '@angular/material/table'
     MatSelectModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

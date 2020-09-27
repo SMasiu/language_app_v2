@@ -5,6 +5,7 @@ import { AddWordComponent } from './components/add-word/add-word.component'
 import { AddTranslationComponent } from './components/add-translation/add-translation.component'
 import { AddTestComponent } from './components/add-test/add-test.component'
 import { TestsListComponent } from './components/tests-list/tests-list.component'
+import { SolveTestComponent } from './components/solve-test/solve-test.component'
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'tests/add',
     component: AddTestComponent
+  },
+  {
+    path: 'test/solve/:id',
+    component: SolveTestComponent
   }
 ]
 
