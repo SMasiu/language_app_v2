@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router'
 import { AddGroupComponent } from './components/add-group/add-group.component'
 import { AddWordComponent } from './components/add-word/add-word.component'
 import { AddTranslationComponent } from './components/add-translation/add-translation.component'
+import { AddTestComponent } from './components/add-test/add-test.component'
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'translations/add',
     component: AddTranslationComponent
+  },
+  {
+    path: 'tests/add',
+    component: AddTestComponent
   }
 ]
 

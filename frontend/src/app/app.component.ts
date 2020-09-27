@@ -15,7 +15,8 @@ export class AppComponent implements OnInit {
   navigation = [
     { name: 'Add word', link: '/words/add' },
     { name: 'Add translation', link: '/translations/add' },
-    { name: 'Add group', link: '/groups/add' }
+    { name: 'Add group', link: '/groups/add' },
+    { name: 'Add test', link: '/tests/add' }
   ]
 
   constructor(private router: Router, private location: Location) {}

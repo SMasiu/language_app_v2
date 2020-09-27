@@ -19,10 +19,11 @@ import { HttpClientModule } from '@angular/common/http'
 import { MatSelectModule } from '@angular/material/select'
 import { GraphQLModule } from './graphql.module'
 import { MatChipsModule } from '@angular/material/chips'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AddTestComponent } from './components/add-test/add-test.component'
 
 @NgModule({
-  declarations: [AppComponent, AddWordComponent, AddTranslationComponent, AddGroupComponent],
+  declarations: [AppComponent, AddWordComponent, AddTranslationComponent, AddGroupComponent, AddTestComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -16,6 +16,7 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
   form: FormGroup
   wordFromCtrl = new FormControl('')
   wordToCtrl = new FormControl('')
+
   fromCtrlSub: Subscription
   toCtrlSub: Subscription
   formToLangSub: Subscription
@@ -45,7 +46,7 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
       toLang: new FormControl('', [Validators.required])
     })
 
-    this.wordFromCtrl.valueChanges
+    this.fromCtrlSub = this.wordFromCtrl.valueChanges
       .pipe(debounceTime(100))
       .subscribe(async (val: string | Word | { toggler: boolean }) => {
         if (typeof val === 'string') {
@@ -62,7 +63,7 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
           ]
         }
       })
-    this.wordToCtrl.valueChanges
+    this.toCtrlSub = this.wordToCtrl.valueChanges
       .pipe(debounceTime(100))
       .subscribe(async (val: string | Word | { toggler: boolean }) => {
         if (typeof val === 'string') {
