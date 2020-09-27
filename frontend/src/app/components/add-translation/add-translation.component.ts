@@ -100,6 +100,12 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
       message = `Something went wrong: ${err.message}`
     }
 
+    this.selectedFromWord = null
+    this.selectedToWord = null
+
+    this.wordFromCtrl.setValue('')
+    this.wordToCtrl.setValue('')
+
     this.snackBar.open(message, 'Close', {
       duration: 5000
     })
