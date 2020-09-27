@@ -59,6 +59,8 @@
       <input matInput placeholder="Skip words" formControlName="skip" type="number" />
     </mat-form-field>
 
-    <button mat-raised-button color="primary" class="form-submit">Add test</button>
+    <button mat-raised-button color="primary" class="form-submit" [disabled]="form.invalid">
+      Add test
+    </button>
   </form>
 </div>

@@ -6,6 +6,8 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { Subscription } from 'rxjs'
 import { GroupsService } from 'src/app/services/groups.service'
+import { ApiService } from 'src/app/services/api.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-add-test',
@@ -27,7 +29,12 @@ export class AddTestComponent implements OnInit, OnDestroy {
 
   ctrlSub: Subscription
 
-  constructor(public languagesService: LanguagesService, private groupsService: GroupsService) {}
+  constructor(
+    public languagesService: LanguagesService,
+    private groupsService: GroupsService,
+    private apiService: ApiService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -70,8 +77,23 @@ export class AddTestComponent implements OnInit, OnDestroy {
     )
   }
 
-  handleSubmit() {
-    console.log(this.form.value)
+  async handleSubmit() {
+    let message: string
+
+    try {
+      const newTest = await this.apiService.addTest({
+        ...this.form.value,
+        groups: this.selectedGroups.length ? this.selectedGroups.map((g) => g.id) : null
+      })
+      message = `Successfully created test`
+      console.log(newTest)
+    } catch (err) {
+      message = `Something went wrong ${err.message}`
+    }
+
+    this.snackBar.open(message, 'Close', {
+      duration: 5000
+    })
   }
 
   ngOnDestroy() {

@@ -9,6 +9,8 @@ import { getGroupsQuery } from '../queries/get-groups.query'
 import { searchWordsQuery } from '../queries/search-words.query'
 import { Translation, TranslationWordOptions } from '../types/translation.types'
 import { addTranslationQuery } from '../queries/add-translation.query'
+import { TestParams, Test } from '../types/test.types'
+import { addTestQuery } from '../queries/add-test.query'
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +89,21 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data.addTranslation)
+      )
+      .toPromise()
+  }
+
+  addTest(testParams: TestParams): Promise<Test> {
+    return this.apollo
+      .mutate<{ createTest: Test }>({
+        mutation: addTestQuery,
+        variables: {
+          testParams: { ...testParams }
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.createTest)
       )
       .toPromise()
   }
