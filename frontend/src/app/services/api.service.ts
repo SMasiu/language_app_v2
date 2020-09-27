@@ -7,6 +7,8 @@ import { WordInput, Word } from '../types/word.types'
 import { addWordQuery } from '../queries/add-word.query'
 import { getGroupsQuery } from '../queries/get-groups.query'
 import { searchWordsQuery } from '../queries/search-words.query'
+import { Translation, TranslationWordOptions } from '../types/translation.types'
+import { addTranslationQuery } from '../queries/add-translation.query'
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +68,25 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data.searchWords)
+      )
+      .toPromise()
+  }
+
+  addTranslation(
+    word1: TranslationWordOptions,
+    word2: TranslationWordOptions
+  ): Promise<Translation> {
+    return this.apollo
+      .mutate<{ addTranslation: Translation }>({
+        mutation: addTranslationQuery,
+        variables: {
+          from: word1,
+          to: word2
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.addTranslation)
       )
       .toPromise()
   }

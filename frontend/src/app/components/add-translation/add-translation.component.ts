@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { Subscription } from 'rxjs'
 import { Word } from 'src/app/types/word.types'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-add-translation',
@@ -32,7 +33,11 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
   lastFromWord: string = ''
   lastToWord: string = ''
 
-  constructor(public languagesService: LanguagesService, private apiService: ApiService) {}
+  constructor(
+    public languagesService: LanguagesService,
+    private apiService: ApiService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -82,10 +87,22 @@ export class AddTranslationComponent implements OnInit, OnDestroy {
     })
   }
 
-  handleSubmit() {
-    console.log(this.form.value)
-    console.log(this.selectedToWord)
-    console.log(this.selectedFromWord)
+  async handleSubmit() {
+    let message: string
+    const { fromLang, toLang } = this.form.value
+    try {
+      const translation = await this.apiService.addTranslation(
+        { lang: fromLang, wordId: this.selectedFromWord.id },
+        { lang: toLang, wordId: this.selectedToWord.id }
+      )
+      message = `Translation: ${translation.word1.word.word} -> ${translation.word2.word.word} was succesfully created`
+    } catch (err) {
+      message = `Something went wrong: ${err.message}`
+    }
+
+    this.snackBar.open(message, 'Close', {
+      duration: 5000
+    })
   }
 
   ngOnDestroy() {
