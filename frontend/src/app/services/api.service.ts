@@ -6,6 +6,7 @@ import { Group, GroupInput } from '../types/group.types'
 import { WordInput, Word } from '../types/word.types'
 import { addWordQuery } from '../queries/add-word.query'
 import { getGroupsQuery } from '../queries/get-groups.query'
+import { searchWordsQuery } from '../queries/search-words.query'
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,22 @@ export class ApiService {
         query: getGroupsQuery
       })
       .pipe((take(1), map((r) => r.data.getAllGroups)))
+      .toPromise()
+  }
+
+  searchWords(lang: string, search: string): Promise<Word[]> {
+    return this.apollo
+      .query<{ searchWords: Word[] }>({
+        query: searchWordsQuery,
+        variables: {
+          lang,
+          search
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.searchWords)
+      )
       .toPromise()
   }
 }

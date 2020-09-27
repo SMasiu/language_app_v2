@@ -8,6 +8,7 @@ import { Group } from 'src/app/types/group.types'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { Word } from 'src/app/types/word.types'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-add-word',
@@ -31,6 +32,8 @@ export class AddWordComponent implements OnInit {
 
   separatorKeysCodes: number[] = [ENTER, COMMA]
 
+  ctrlSub: Subscription
+
   constructor(
     private apiService: ApiService,
     private snackBar: MatSnackBar,
@@ -44,7 +47,7 @@ export class AddWordComponent implements OnInit {
       lang: new FormControl('')
     })
 
-    this.groupCtrl.valueChanges.subscribe((val) => {
+    this.ctrlSub = this.groupCtrl.valueChanges.subscribe((val) => {
       this.filterGroupsToShow(val)
     })
 
@@ -101,5 +104,9 @@ export class AddWordComponent implements OnInit {
         (!val || new RegExp(`^${val}`).test(g.name)) &&
         this.selectedGroups.findIndex((sg) => sg.id === g.id) === -1
     )
+  }
+
+  ngOnDestroy() {
+    this.ctrlSub.unsubscribe()
   }
 }

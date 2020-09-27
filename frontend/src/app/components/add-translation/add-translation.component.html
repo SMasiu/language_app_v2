@@ -26,24 +26,50 @@
     <section class="words-picker">
       <section class="divider">
         <p class="text-info">Select word</p>
-        <mat-form-field appearance="outline">
-          <mat-label>Word</mat-label>
-          <mat-select required>
-            <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
-              {{ lang }}
+        <mat-form-field>
+          <input
+            type="text"
+            placeholder="Select word"
+            matInput
+            [formControl]="wordFromCtrl"
+            [matAutocomplete]="autoFrom"
+          />
+          <mat-autocomplete #autoFrom="matAutocomplete" [displayWith]="displayWord">
+            <mat-option
+              *ngFor="let option of wordsFromList"
+              [value]="option"
+              (click)="selectFromWord(option)"
+            >
+              {{ option.word }}
             </mat-option>
-          </mat-select>
+            <mat-option [value]="''">
+              <button mat-raised-button color="primary" class="select-btn">Add new word</button>
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </section>
       <section>
         <p class="text-info">Select word</p>
-        <mat-form-field appearance="outline">
-          <mat-label>Word</mat-label>
-          <mat-select required>
-            <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
-              {{ lang }}
+        <mat-form-field>
+          <input
+            type="text"
+            placeholder="Select word"
+            matInput
+            [formControl]="wordToCtrl"
+            [matAutocomplete]="autoTo"
+          />
+          <mat-autocomplete #autoTo="matAutocomplete" [displayWith]="displayWord">
+            <mat-option
+              *ngFor="let option of wordsToList"
+              [value]="option"
+              (click)="selectToWord(option)"
+            >
+              {{ option.word }}
             </mat-option>
-          </mat-select>
+            <mat-option [value]="''">
+              <button mat-raised-button color="primary" class="select-btn">Add new word</button>
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </section>
     </section>
