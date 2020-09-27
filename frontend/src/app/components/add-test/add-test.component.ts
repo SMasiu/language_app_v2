@@ -91,6 +91,12 @@ export class AddTestComponent implements OnInit, OnDestroy {
       message = `Something went wrong ${err.message}`
     }
 
+    this.formGroupDirective.resetForm()
+    this.selectedGroups = []
+    this.groupCtrl.setValue('')
+    this.form.controls.skip.setValue(0)
+    this.form.controls.limit.setValue(25)
+
     this.snackBar.open(message, 'Close', {
       duration: 5000
     })
