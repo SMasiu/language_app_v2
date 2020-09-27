@@ -1,1 +1,64 @@
-<p>add-test works!</p>
+<div class="form-wrapper">
+  <form [formGroup]="form" class="form" (ngSubmit)="handleSubmit()">
+    <header class="form-header">
+      <h3>Add test</h3>
+    </header>
+    <section class="lang-picker">
+      <mat-form-field appearance="outline">
+        <mat-label>Language (questions)</mat-label>
+        <mat-select required formControlName="langFrom">
+          <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
+            {{ lang }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Language (answers)</mat-label>
+        <mat-select required formControlName="langTo">
+          <mat-option *ngFor="let lang of languagesService.availableLanguages" [value]="lang">
+            {{ lang }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+
+    <mat-form-field appearance="outline">
+      <mat-chip-list #chipList>
+        <mat-chip
+          *ngFor="let group of selectedGroups"
+          [selectable]="true"
+          [removable]="true"
+          (removed)="handleGroupRemove(group)"
+        >
+          {{ group.name }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="New group..."
+          #groupInput
+          [formControl]="groupCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        />
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleGroupSelect($event)">
+        <mat-option *ngFor="let group of filtredGroups" [value]="group.id">
+          {{ group.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Limit</mat-label>
+      <input matInput placeholder="Limit" formControlName="limit" type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Skip</mat-label>
+      <input matInput placeholder="Skip words" formControlName="skip" type="number" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="form-submit">Add test</button>
+  </form>
+</div>

@@ -1,0 +1,30 @@
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  width: 90%;
+  max-width: 800px;
+}
+
+.form-header {
+  text-align: center;
+  h3 {
+    font-size: 22px;
+  }
+}
+
+.lang-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-submit {
+  width: 100%;
+}
