@@ -13,6 +13,9 @@ import { TestParams, Test } from '../types/test.types'
 import { addTestQuery } from '../queries/add-test.query'
 import { getTestsQuery } from '../queries/get-tests.query'
 import { getTestByIdQuery } from '../queries/get-test-by-id.query'
+import { getWordByIdQuery } from '../queries/get-word-by-id.query'
+import { Translate } from '../types/translate.types'
+import { translateByWordIdQuery } from '../queries/translate-by-word-id.query'
 
 @Injectable({
   providedIn: 'root'
@@ -133,6 +136,39 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data.getTestById)
+      )
+      .toPromise()
+  }
+
+  getWordById(lang: string, id: number): Promise<Word> {
+    return this.apollo
+      .query<{ getWordById: Word }>({
+        query: getWordByIdQuery,
+        variables: {
+          lang,
+          id
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.getWordById)
+      )
+      .toPromise()
+  }
+
+  translateByWordId(wordId: number, from: string, to: string): Promise<Translate> {
+    return this.apollo
+      .query<{ translateWordByWordId: Translate }>({
+        query: translateByWordIdQuery,
+        variables: {
+          wordId,
+          from,
+          to
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.translateWordByWordId)
       )
       .toPromise()
   }

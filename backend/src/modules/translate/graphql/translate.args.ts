@@ -1,4 +1,4 @@
-import { Field, ArgsType } from '@nestjs/graphql';
+import { Field, ArgsType, Int } from '@nestjs/graphql';
 import { availableLanguages } from 'src/modules/language/available-languages';
 import { IsIn } from 'class-validator';
 
@@ -14,4 +14,18 @@ export class TranslateArgs {
 
   @Field(() => String)
   word: string;
+}
+
+@ArgsType()
+export class TranslateByWordIdArgs {
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  from: string;
+
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  to: string;
+
+  @Field(() => Int)
+  wordId: number;
 }

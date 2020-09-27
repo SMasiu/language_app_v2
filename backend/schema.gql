@@ -44,6 +44,7 @@ type Query {
   getAllGroups: [Group!]!
   getTranslationById(id: Int!, from: String!, to: String!): Translation
   translateWord(from: String!, to: String!, word: String!): Translate!
+  translateWordByWordId(from: String!, to: String!, wordId: Int!): Translate!
   getTestById(id: Int!): Test
   getAllTests: [Test!]!
 }

@@ -6,10 +6,22 @@
     <p class="progress-text">Progress</p>
     <mat-progress-bar
       mode="determinate"
-      value="40"
+      [value]="getProgressValue()"
       color="primary"
-      maxlength="50"
     ></mat-progress-bar>
     <p class="progress-text">{{ progressCurrent }} of {{ progressMax }}</p>
+  </section>
+
+  <section class="test-wrapper" *ngIf="currentWord">
+    <form [formGroup]="form" class="form" (ngSubmit)="handleAnswer()">
+      <p class="question-text">
+        Give translation for word: <strong class="question-word">{{ currentWord.word }}</strong>
+      </p>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Answer</mat-label>
+        <input matInput placeholder="Answer" formControlName="answer" />
+      </mat-form-field>
+      <button mat-raised-button color="primary">Answer</button>
+    </form>
   </section>
 </section>

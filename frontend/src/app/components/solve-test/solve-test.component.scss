@@ -15,3 +15,25 @@
 .progress-text {
   margin: 0;
 }
+
+.test-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 75px;
+}
+
+.form {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-text {
+  font-size: 24px;
+}
+
+.question-word {
+  font-weight: 500;
+  color: #c2185b;
+}
