@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { Word } from 'src/app/types/word.types'
 import { FormGroup, FormControl } from '@angular/forms'
+import { Translate } from 'src/app/types/translate.types'
 
 @Component({
   selector: 'app-solve-test',
@@ -14,14 +15,20 @@ import { FormGroup, FormControl } from '@angular/forms'
 export class SolveTestComponent implements OnInit {
   test: Test
 
-  progressCurrent = 12
-  progressMax = 34
+  progressCurrent: number = 0
+  progressMax: number
 
   wordsToSolve: number[] = []
   currentWordIndex: number = 0
   currentWord: Word
 
   form: FormGroup
+  finished: boolean = false
+  tryCounter: number = 0
+
+  lastTranslation: Translate
+  lastAnswerResunt: boolean
+  lastWordToSolve: Word
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {}
 
@@ -38,7 +45,7 @@ export class SolveTestComponent implements OnInit {
         this.test.langFrom,
         this.wordsToSolve[this.currentWordIndex]
       )
-      console.log(this.currentWord)
+      this.progressMax = this.wordsToSolve.length
     })
   }
 
@@ -47,9 +54,57 @@ export class SolveTestComponent implements OnInit {
   }
 
   async handleAnswer() {
-    console.log(this.form.value)
     const { langFrom, langTo } = this.test
     const translate = await this.apiService.translateByWordId(this.currentWord.id, langFrom, langTo)
+    const isValidAnswer = this.isValidAnswer(translate.wordTranslations)
+
+    this.lastTranslation = { ...translate }
+
+    this.tryCounter++
+
     console.log(translate)
+
+    if (isValidAnswer) {
+      this.lastAnswerResunt = true
+      this.progressCurrent++
+      this.wordsToSolve.splice(this.currentWordIndex, 1)
+
+      if (this.currentWordIndex === this.wordsToSolve.length) {
+        this.currentWordIndex = 0
+      }
+      if (this.wordsToSolve.length) {
+        this.lastWordToSolve = { ...this.currentWord }
+        this.currentWord = await this.apiService.getWordById(
+          this.test.langFrom,
+          this.wordsToSolve[this.currentWordIndex]
+        )
+      } else {
+        console.log('win')
+        this.finished = true
+      }
+    } else {
+      this.lastAnswerResunt = false
+      this.currentWordIndex += 1
+
+      if (this.currentWordIndex === this.wordsToSolve.length) {
+        this.currentWordIndex = 0
+      }
+      this.lastWordToSolve = { ...this.currentWord }
+      this.currentWord = await this.apiService.getWordById(
+        this.test.langFrom,
+        this.wordsToSolve[this.currentWordIndex]
+      )
+    }
+
+    this.form.controls.answer.setValue('')
+  }
+
+  isValidAnswer(correctWords: Word[]): boolean {
+    const { answer }: { answer: string } = this.form.value
+
+    return (
+      correctWords.findIndex((w) => w.word.toLowerCase().trim() === answer.toLowerCase().trim()) !==
+      -1
+    )
   }
 }

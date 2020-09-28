@@ -37,3 +37,42 @@
   font-weight: 500;
   color: #c2185b;
 }
+
+.last-result {
+  margin-top: 75px;
+}
+
+.result-info {
+  font-size: 24px;
+  text-align: center;
+}
+
+.finish-page {
+  text-align: center;
+  margin-top: 75px;
+}
+
+.translation-word {
+  display: inline-block;
+  height: 20px;
+  margin-right: 30px;
+  position: relative;
+  &:not(:last-child) {
+    &::after {
+      content: '';
+      position: absolute;
+      right: -17px;
+      top: 8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #b0bec5;
+    }
+  }
+}
+
+.last-translation {
+  width: 90%;
+  max-width: 800px;
+  margin: 75px auto 25px;
+}

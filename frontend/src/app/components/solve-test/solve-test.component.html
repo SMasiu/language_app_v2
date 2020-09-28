@@ -12,7 +12,7 @@
     <p class="progress-text">{{ progressCurrent }} of {{ progressMax }}</p>
   </section>
 
-  <section class="test-wrapper" *ngIf="currentWord">
+  <section class="test-wrapper" *ngIf="currentWord && !finished">
     <form [formGroup]="form" class="form" (ngSubmit)="handleAnswer()">
       <p class="question-text">
         Give translation for word: <strong class="question-word">{{ currentWord.word }}</strong>
@@ -23,5 +23,23 @@
       </mat-form-field>
       <button mat-raised-button color="primary">Answer</button>
     </form>
+  </section>
+
+  <section *ngIf="lastTranslation" class="last-result">
+    <p [ngStyle]="{ color: lastAnswerResunt ? '#4ac769' : '#c7564a' }" class="result-info">
+      Your answer was {{ lastAnswerResunt ? '' : 'in' }}correct
+    </p>
+    <section class="last-translation">
+      <p>
+        All translations for Word <strong>{{ lastWordToSolve.word }}</strong>
+      </p>
+      <span class="translation-word" *ngFor="let trans of lastTranslation.wordTranslations">{{
+        trans.word
+      }}</span>
+    </section>
+  </section>
+
+  <section *ngIf="finished" class="finish-page">
+    <p class="question-text">You have finished test in {{ tryCounter }} tries.</p>
   </section>
 </section>
