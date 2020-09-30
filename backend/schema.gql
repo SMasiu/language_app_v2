@@ -38,8 +38,8 @@ type Test {
 }
 
 type Query {
-  getWordById(id: Int!, lang: String!): Word
-  searchWords(search: String!, lang: String!): [Word!]!
+  getWordById(lang: String!, id: Int!): Word
+  searchWords(lang: String!, search: String!): [Word!]!
   getGroupById(id: Int!): Group
   getAllGroups: [Group!]!
   getTranslationById(id: Int!, from: String!, to: String!): Translation

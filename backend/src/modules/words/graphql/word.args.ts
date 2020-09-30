@@ -36,3 +36,23 @@ export class WordArgs {
   @IsIn(availableLanguages)
   lang: string;
 }
+
+@ArgsType()
+export class SearchWordsArgs {
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  lang: string;
+
+  @Field(() => String)
+  search: string;
+}
+
+@ArgsType()
+export class GetWordByIdArgs {
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  lang: string;
+
+  @Field(() => Int)
+  id: number;
+}

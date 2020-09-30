@@ -7,7 +7,11 @@ import {
   Parent,
   Int,
 } from '@nestjs/graphql';
-import { WordArgs } from '../graphql/word.args';
+import {
+  WordArgs,
+  SearchWordsArgs,
+  GetWordByIdArgs,
+} from '../graphql/word.args';
 import { Word } from '../graphql/word.type';
 import { WordsService } from '../services/words.service';
 import { GroupsService } from 'src/modules/groups/services/groups.service';
@@ -21,18 +25,12 @@ export class WordsResolver {
   ) {}
 
   @Query(() => Word, { nullable: true })
-  async getWordById(
-    @Args('lang') lang: string,
-    @Args({ type: () => Int, name: 'id' }) id: number,
-  ) {
+  async getWordById(@Args() { lang, id }: GetWordByIdArgs) {
     return await this.wordsService.getWordById(lang, id);
   }
 
   @Query(() => [Word])
-  async searchWords(
-    @Args('lang') lang: string,
-    @Args('search') search: string,
-  ) {
+  async searchWords(@Args() { lang, search }: SearchWordsArgs) {
     return await this.wordsService.searchWords(lang, search);
   }
 
