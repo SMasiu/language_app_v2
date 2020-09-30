@@ -6,6 +6,7 @@ import {
   MaxLength,
   ValidateIf,
   IsNotEmpty,
+  ArrayUnique,
 } from 'class-validator';
 import { availableLanguages } from 'src/modules/language/available-languages';
 
@@ -18,6 +19,7 @@ export class WordInput {
   @Field(() => [Int], { nullable: true })
   @ValidateIf(o => o.groups !== null && o.groups !== undefined)
   @IsNotEmpty({ each: true })
+  @ArrayUnique()
   groups: number[];
 }
 

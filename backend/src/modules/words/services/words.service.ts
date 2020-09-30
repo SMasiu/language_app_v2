@@ -16,8 +16,6 @@ export class WordsService {
     const dbWord = await this.checkIfWordExists(lang, word.word);
 
     if (dbWord) {
-      await this.groupService.addGroupsToWord(lang, dbWord.id, word.groups);
-
       return {
         ...dbWord,
         lang,
