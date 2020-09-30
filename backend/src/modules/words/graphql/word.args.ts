@@ -1,5 +1,5 @@
 import { ArgsType, Field, InputType, Int } from '@nestjs/graphql';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 import {
   ValidateNested,
   IsIn,
@@ -9,11 +9,13 @@ import {
   ArrayUnique,
 } from 'class-validator';
 import { availableLanguages } from 'src/modules/language/available-languages';
+import { trimToLowerCase } from 'src/common/transfrom';
 
 @InputType()
 export class WordInput {
   @Field(() => String)
   @MaxLength(25)
+  @Transform(trimToLowerCase)
   word: string;
 
   @Field(() => [Int], { nullable: true })

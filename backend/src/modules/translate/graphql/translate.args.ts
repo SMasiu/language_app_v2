@@ -1,6 +1,8 @@
 import { Field, ArgsType, Int } from '@nestjs/graphql';
 import { availableLanguages } from 'src/modules/language/available-languages';
 import { IsIn } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { trimToLowerCase } from 'src/common/transfrom';
 
 @ArgsType()
 export class TranslateArgs {
@@ -13,6 +15,7 @@ export class TranslateArgs {
   to: string;
 
   @Field(() => String)
+  @Transform(trimToLowerCase)
   word: string;
 }
 
