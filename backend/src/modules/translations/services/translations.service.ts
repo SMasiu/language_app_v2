@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { DatabaseService } from 'src/modules/database/services/database.service';
 import { LanguageService } from 'src/modules/language/services/language.service';
 import {
   TranslationsArgs,
   GetTranslationByIdArgs,
+  TranslationWordInput,
 } from '../graphql/translation.args';
 import {
   TranslationModel,
@@ -32,6 +33,12 @@ export class TranslationsService {
       to = { ...swap };
     }
 
+    const exists = await this.checkIfTranslationExists(from, to);
+
+    if (exists) {
+      throw new InternalServerErrorException('This translation alredy exist');
+    }
+
     return this.mapModelToResponse(
       (
         await this.database.query<TranslationModel>(
@@ -44,6 +51,20 @@ export class TranslationsService {
       from.lang,
       to.lang,
     );
+  }
+
+  async checkIfTranslationExists(
+    from: TranslationWordInput,
+    to: TranslationWordInput,
+  ) {
+    const translations = await this.database.query(
+      `
+      SELECT id FROM translations_${from.lang}_${to.lang} WHERE word_1_id = $1 AND word_2_id = $2
+    `,
+      [from.wordId, to.wordId],
+    );
+
+    return translations.length !== 0;
   }
 
   async getTranslationById({
