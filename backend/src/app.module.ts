@@ -8,6 +8,7 @@ import { TranslationsModule } from './modules/translations/translations.module'
 import { GroupsModule } from './modules/groups/groups.module'
 import { TranslateModule } from './modules/translate/translate.module'
 import { TestsModule } from './modules/tests/tests.module'
+import { ServeStaticModule } from '@nestjs/serve-static'
 
 @Module({
   imports: [
@@ -24,6 +25,9 @@ import { TestsModule } from './modules/tests/tests.module'
           'request.credentials': 'same-origin'
         }
       }
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public')
     }),
     DatabaseModule,
     WordsModule,
