@@ -1,10 +1,7 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { Translation } from '../graphql/translation.type';
-import {
-  TranslationsArgs,
-  GetTranslationByIdArgs,
-} from '../graphql/translation.args';
-import { TranslationsService } from '../services/translations.service';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql'
+import { Translation } from '../graphql/translation.type'
+import { TranslationsArgs, GetTranslationByIdArgs } from '../graphql/translation.args'
+import { TranslationsService } from '../services/translations.service'
 
 @Resolver(() => Translation)
 export class TranslationsResolver {
@@ -12,11 +9,11 @@ export class TranslationsResolver {
 
   @Mutation(() => Translation)
   async addTranslation(@Args() args: TranslationsArgs) {
-    return await this.translationService.addTranslation(args);
+    return await this.translationService.addTranslation(args)
   }
 
   @Query(() => Translation, { nullable: true })
   async getTranslationById(@Args() args: GetTranslationByIdArgs) {
-    return await this.translationService.getTranslationById(args);
+    return await this.translationService.getTranslationById(args)
   }
 }

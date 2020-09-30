@@ -1,27 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import {
-  TranslateArgs,
-  TranslateByWordIdArgs,
-} from '../graphql/translate.args';
-import { DatabaseService } from 'src/modules/database/services/database.service';
-import { LanguageService } from 'src/modules/language/services/language.service';
-import { WordModel } from 'src/modules/words/types/word.types';
+import { Injectable } from '@nestjs/common'
+import { TranslateArgs, TranslateByWordIdArgs } from '../graphql/translate.args'
+import { DatabaseService } from 'src/modules/database/services/database.service'
+import { LanguageService } from 'src/modules/language/services/language.service'
+import { WordModel } from 'src/modules/words/types/word.types'
 
 @Injectable()
 export class TranslateService {
-  constructor(
-    private database: DatabaseService,
-    private languageService: LanguageService,
-  ) {}
+  constructor(private database: DatabaseService, private languageService: LanguageService) {}
 
   async translateWord({ from, to, word }: TranslateArgs) {
-    const translation = this.languageService.getTranslationPair(from, to);
-    const originalFrom = from;
-    const originalTo = to;
+    const translation = this.languageService.getTranslationPair(from, to)
+    const originalFrom = from
+    const originalTo = to
 
     if (translation[0] !== from) {
-      from = to;
-      to = originalFrom;
+      from = to
+      to = originalFrom
     }
 
     const words = await this.database.query<WordModel>(
@@ -32,23 +26,23 @@ export class TranslateService {
         JOIN words_${to} w_${to} ON w_${to}.id = tr.word_2_id
         WHERE w_${originalFrom}.word = $1
     `,
-      [word],
-    );
+      [word]
+    )
 
     return {
       word,
-      wordTranslations: words.map(w => ({ ...w, lang: to })),
-    };
+      wordTranslations: words.map((w) => ({ ...w, lang: to }))
+    }
   }
 
   async translateByWordId({ from, to, wordId }: TranslateByWordIdArgs) {
-    const translation = this.languageService.getTranslationPair(from, to);
-    const originalFrom = from;
-    const originalTo = to;
+    const translation = this.languageService.getTranslationPair(from, to)
+    const originalFrom = from
+    const originalTo = to
 
     if (translation[0] !== from) {
-      from = to;
-      to = originalFrom;
+      from = to
+      to = originalFrom
     }
 
     const words = await this.database.query<WordModel>(
@@ -59,12 +53,12 @@ export class TranslateService {
         JOIN words_${to} w_${to} ON w_${to}.id = tr.word_2_id
         WHERE w_${originalFrom}.id = $1
     `,
-      [wordId],
-    );
+      [wordId]
+    )
 
     return {
       word: '',
-      wordTranslations: words.map(w => ({ ...w, lang: to })),
-    };
+      wordTranslations: words.map((w) => ({ ...w, lang: to }))
+    }
   }
 }

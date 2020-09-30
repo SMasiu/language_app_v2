@@ -1,10 +1,10 @@
 export interface WordModel {
-  id: number;
-  word: string;
+  id: number
+  word: string
 }
 
 export interface GetWordsGroupOptions {
-  groups: number[];
-  skip: number;
-  limit: number;
+  groups: number[]
+  skip: number
+  limit: number
 }

@@ -1,16 +1,16 @@
-import { ArgsType, Field, Int, InputType } from '@nestjs/graphql';
-import { IsIn, ValidateNested } from 'class-validator';
-import { availableLanguages } from 'src/modules/language/available-languages';
-import { Type } from 'class-transformer';
+import { ArgsType, Field, Int, InputType } from '@nestjs/graphql'
+import { IsIn, ValidateNested } from 'class-validator'
+import { availableLanguages } from 'src/modules/language/available-languages'
+import { Type } from 'class-transformer'
 
 @InputType()
 export class TranslationWordInput {
   @Field(() => Int)
-  wordId: number;
+  wordId: number
 
   @Field(() => String)
   @IsIn(availableLanguages)
-  lang: string;
+  lang: string
 }
 
 @ArgsType()
@@ -18,24 +18,24 @@ export class TranslationsArgs {
   @Field(() => TranslationWordInput)
   @Type(() => TranslationWordInput)
   @ValidateNested({ each: true })
-  from: TranslationWordInput;
+  from: TranslationWordInput
 
   @Field(() => TranslationWordInput)
   @Type(() => TranslationWordInput)
   @ValidateNested({ each: true })
-  to: TranslationWordInput;
+  to: TranslationWordInput
 }
 
 @ArgsType()
 export class GetTranslationByIdArgs {
   @Field(() => Int)
-  id: number;
+  id: number
 
   @Field(() => String)
   @IsIn(availableLanguages)
-  from: string;
+  from: string
 
   @Field(() => String)
   @IsIn(availableLanguages)
-  to: string;
+  to: string
 }

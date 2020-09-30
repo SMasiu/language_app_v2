@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
-import { DatabaseModule } from './modules/database/database.module';
-import { WordsModule } from './modules/words/words.module';
-import { LanguageModule } from './modules/language/language.module';
-import { TranslationsModule } from './modules/translations/translations.module';
-import { GroupsModule } from './modules/groups/groups.module';
-import { TranslateModule } from './modules/translate/translate.module';
-import { TestsModule } from './modules/tests/tests.module';
+import { Module } from '@nestjs/common'
+import { GraphQLModule } from '@nestjs/graphql'
+import { join } from 'path'
+import { DatabaseModule } from './modules/database/database.module'
+import { WordsModule } from './modules/words/words.module'
+import { LanguageModule } from './modules/language/language.module'
+import { TranslationsModule } from './modules/translations/translations.module'
+import { GroupsModule } from './modules/groups/groups.module'
+import { TranslateModule } from './modules/translate/translate.module'
+import { TestsModule } from './modules/tests/tests.module'
 
 @Module({
   imports: [
@@ -16,14 +16,14 @@ import { TestsModule } from './modules/tests/tests.module';
       debug: true, //set false on production
       cors: {
         credentials: true,
-        origin: true,
+        origin: true
       },
       playground: {
         endpoint: '/graphql',
         settings: {
-          'request.credentials': 'same-origin',
-        },
-      },
+          'request.credentials': 'same-origin'
+        }
+      }
     }),
     DatabaseModule,
     WordsModule,
@@ -31,7 +31,7 @@ import { TestsModule } from './modules/tests/tests.module';
     TranslationsModule,
     GroupsModule,
     TranslateModule,
-    TestsModule,
-  ],
+    TestsModule
+  ]
 })
 export class AppModule {}

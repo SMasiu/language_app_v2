@@ -1,1 +1,1 @@
-export const trimToLowerCase = (val: string) => val.trim().toLowerCase();
+export const trimToLowerCase = (val: string) => val.trim().toLowerCase()

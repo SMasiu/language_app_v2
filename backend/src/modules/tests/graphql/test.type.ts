@@ -1,16 +1,16 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql'
 
 @ObjectType()
 export class Test {
   @Field(() => Int)
-  id: number;
+  id: number
 
   @Field(() => String)
-  langFrom: string;
+  langFrom: string
 
   @Field(() => String)
-  langTo: string;
+  langTo: string
 
   @Field(() => [Int])
-  words: number[];
+  words: number[]
 }

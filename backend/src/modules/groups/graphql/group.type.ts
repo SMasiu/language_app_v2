@@ -1,10 +1,10 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql'
 
 @ObjectType()
 export class Group {
   @Field(() => Int)
-  id: number;
+  id: number
 
   @Field(() => String)
-  name: string;
+  name: string
 }

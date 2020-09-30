@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { DatabaseProviderService } from './database-provider.service';
+import { Injectable } from '@nestjs/common'
+import { DatabaseProviderService } from './database-provider.service'
 
 @Injectable()
 export class DatabaseService {
   constructor(private databaseProvider: DatabaseProviderService) {}
 
   async query<T>(sql: string, args: any[] = null): Promise<T[]> {
-    return (await this.databaseProvider.pool.query(sql, args)).rows;
+    return (await this.databaseProvider.pool.query(sql, args)).rows
   }
 }
