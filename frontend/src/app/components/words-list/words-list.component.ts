@@ -25,7 +25,7 @@ export class WordsListComponent implements OnInit, OnDestroy {
   skipWords: number = 0
   limitWords: number = 25
 
-  displayedColumns: string[] = ['id', 'word']
+  displayedColumns: string[] = ['id', 'word', 'action']
 
   constructor(public languagesService: LanguagesService, private apiService: ApiService) {}
 
