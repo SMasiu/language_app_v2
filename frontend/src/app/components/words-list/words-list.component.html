@@ -27,7 +27,13 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="accent">Go to word</button>
+          <button
+            mat-raised-button
+            color="accent"
+            [routerLink]="['/words', langCtrl.value, element.id]"
+          >
+            Go to word
+          </button>
         </td>
       </ng-container>
 

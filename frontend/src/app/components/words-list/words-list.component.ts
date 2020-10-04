@@ -49,7 +49,6 @@ export class WordsListComponent implements OnInit, OnDestroy {
     const { skipWords, limitWords } = this
 
     if (lang) {
-      console.log({ lang, search, skipWords, limitWords })
       const { getAllWords, getAllWordsCount } = await this.apiService.getAllWords(
         lang,
         { search },
@@ -58,7 +57,6 @@ export class WordsListComponent implements OnInit, OnDestroy {
 
       this.wordsCount = getAllWordsCount.count
       this.words = [...getAllWords]
-      console.log(this.words)
     }
   }
 

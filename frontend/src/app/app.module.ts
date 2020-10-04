@@ -26,7 +26,8 @@ import { MatTableModule } from '@angular/material/table'
 import { SolveTestComponent } from './components/solve-test/solve-test.component'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { WordsListComponent } from './components/words-list/words-list.component'
-import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { WordItemComponent } from './components/word-item/word-item.component'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     AddTestComponent,
     TestsListComponent,
     SolveTestComponent,
-    WordsListComponent
+    WordsListComponent,
+    WordItemComponent
   ],
   imports: [
     BrowserModule,
