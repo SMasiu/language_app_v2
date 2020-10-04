@@ -39,3 +39,16 @@ export class GetTranslationByIdArgs {
   @IsIn(availableLanguages)
   to: string
 }
+
+@ArgsType()
+export class DeleteTranslationArgs {
+  @Field(() => TranslationWordInput)
+  @Type(() => TranslationWordInput)
+  @ValidateNested({ each: true })
+  from: TranslationWordInput
+
+  @Field(() => TranslationWordInput)
+  @Type(() => TranslationWordInput)
+  @ValidateNested({ each: true })
+  to: TranslationWordInput
+}

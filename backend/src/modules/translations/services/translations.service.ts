@@ -4,7 +4,8 @@ import { LanguageService } from 'src/modules/language/services/language.service'
 import {
   TranslationsArgs,
   GetTranslationByIdArgs,
-  TranslationWordInput
+  TranslationWordInput,
+  DeleteTranslationArgs
 } from '../graphql/translation.args'
 import { TranslationModel, TranslationResponse } from '../types/translation.types'
 
@@ -72,6 +73,31 @@ export class TranslationsService {
       )[0],
       from,
       to
+    )
+  }
+
+  async deleteTranslation({ from, to }: DeleteTranslationArgs) {
+    const translation = this.languageService.getTranslationPair(from.lang, to.lang)
+
+    if (translation[0] !== from.lang) {
+      let swap = from
+      from = to
+      to = swap
+    }
+
+    return this.mapModelToResponse(
+      (
+        await this.database.query<TranslationModel>(
+          `
+        DELETE FROM translations_${from.lang}_${to.lang}
+        WHERE word_1_id = $1 AND word_2_id = $2
+        RETURNING *
+      `,
+          [from.wordId, to.wordId]
+        )
+      )[0],
+      from.lang,
+      to.lang
     )
   }
 
