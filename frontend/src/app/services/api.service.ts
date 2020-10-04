@@ -23,6 +23,7 @@ import { getWordByIdQuery } from '../queries/get-word-by-id.query'
 import { Translate } from '../types/translate.types'
 import { translateByWordIdQuery } from '../queries/translate-by-word-id.query'
 import { getAllWordsQuery } from '../queries/get-all-words.query'
+import { deleteWordQuery } from '../queries/delete-word.query'
 
 @Injectable({
   providedIn: 'root'
@@ -197,6 +198,22 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data)
+      )
+      .toPromise()
+  }
+
+  deleteWord(lang: string, id: number): Promise<Word> {
+    return this.apollo
+      .mutate<{ deleteWord: Word }>({
+        mutation: deleteWordQuery,
+        variables: {
+          lang,
+          id
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.deleteWord)
       )
       .toPromise()
   }

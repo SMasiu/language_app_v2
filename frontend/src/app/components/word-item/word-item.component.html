@@ -4,7 +4,7 @@
       Word: <span class="word">{{ word.word }}</span>
     </h1>
     <div>
-      <button mat-mini-fab color="warn" class="action-btn">
+      <button mat-mini-fab color="warn" class="action-btn" (click)="handleDeleteWord()">
         <mat-icon>delete</mat-icon>
       </button>
       <button mat-mini-fab color="primary" class="action-btn">
