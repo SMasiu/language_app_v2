@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   pageTitle = 'groups / add'
 
   navigation = [
+    { name: 'Words', link: '/words' },
     { name: 'Add word', link: '/words/add' },
     { name: 'Add translation', link: '/translations/add' },
     { name: 'Add group', link: '/groups/add' },

@@ -6,6 +6,7 @@ import { AddTranslationComponent } from './components/add-translation/add-transl
 import { AddTestComponent } from './components/add-test/add-test.component'
 import { TestsListComponent } from './components/tests-list/tests-list.component'
 import { SolveTestComponent } from './components/solve-test/solve-test.component'
+import { WordsListComponent } from './components/words-list/words-list.component'
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'groups/add',
     component: AddGroupComponent
+  },
+  {
+    path: 'words',
+    component: WordsListComponent
   },
   {
     path: 'words/add',

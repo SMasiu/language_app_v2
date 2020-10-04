@@ -25,6 +25,8 @@ import { TestsListComponent } from './components/tests-list/tests-list.component
 import { MatTableModule } from '@angular/material/table'
 import { SolveTestComponent } from './components/solve-test/solve-test.component'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { WordsListComponent } from './components/words-list/words-list.component'
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
     AddGroupComponent,
     AddTestComponent,
     TestsListComponent,
-    SolveTestComponent
+    SolveTestComponent,
+    WordsListComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
     MatChipsModule,
     MatAutocompleteModule,
     MatTableModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,7 +3,13 @@ import { Apollo } from 'apollo-angular'
 import { addGroupQuery } from '../queries/add-group.query'
 import { take, map } from 'rxjs/operators'
 import { Group, GroupInput } from '../types/group.types'
-import { WordInput, Word } from '../types/word.types'
+import {
+  WordInput,
+  Word,
+  GetAllWordsParams,
+  PagingParams,
+  GetAllWordsResponse
+} from '../types/word.types'
 import { addWordQuery } from '../queries/add-word.query'
 import { getGroupsQuery } from '../queries/get-groups.query'
 import { searchWordsQuery } from '../queries/search-words.query'
@@ -16,6 +22,7 @@ import { getTestByIdQuery } from '../queries/get-test-by-id.query'
 import { getWordByIdQuery } from '../queries/get-word-by-id.query'
 import { Translate } from '../types/translate.types'
 import { translateByWordIdQuery } from '../queries/translate-by-word-id.query'
+import { getAllWordsQuery } from '../queries/get-all-words.query'
 
 @Injectable({
   providedIn: 'root'
@@ -169,6 +176,27 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data.translateWordByWordId)
+      )
+      .toPromise()
+  }
+
+  getAllWords(
+    lang: string,
+    params: GetAllWordsParams,
+    paging: PagingParams
+  ): Promise<GetAllWordsResponse> {
+    return this.apollo
+      .query<GetAllWordsResponse>({
+        query: getAllWordsQuery,
+        variables: {
+          lang,
+          paging: { ...paging },
+          params: { ...params }
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data)
       )
       .toPromise()
   }

@@ -112,13 +112,15 @@ export class WordsService {
   }
 
   async getAllWordsCount({ params, lang }: GetAllWordsCountArgs) {
-    return await this.database.query<{ count: number }>(
-      `
+    return (
+      await this.database.query<{ count: number }>(
+        `
         SELECT COUNT(*)
         FROM words_${lang}
-        WHERE word LIKE 's%'
+        WHERE word LIKE $1
       `,
-      [`${params.search}%`]
+        [`${params.search}%`]
+      )
     )[0]
   }
 }
