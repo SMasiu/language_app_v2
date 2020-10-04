@@ -15,7 +15,7 @@
   <p>Id: {{ word.id }}</p>
   <p>
     Groups:
-    <span class="group" *ngFor="let group of word.groups">{{ group }}</span>
+    <span class="group" *ngFor="let group of word.groups">{{ group.name }}</span>
     <span *ngIf="!word.groups.length">This word hasn't any groups</span>
   </p>
 
@@ -51,7 +51,12 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-mini-fab color="warn" class="action-btn">
+          <button
+            mat-mini-fab
+            color="warn"
+            class="action-btn"
+            (click)="handleTranslationDelete(element)"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </td>

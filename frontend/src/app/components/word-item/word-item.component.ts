@@ -67,4 +67,29 @@ export class WordItemComponent implements OnInit {
       this.router.navigateByUrl('/words')
     }
   }
+
+  async handleTranslationDelete(wordToDel: Word) {
+    let message: string
+
+    try {
+      await this.apiService.deleteTranslation(
+        {
+          lang: this.lang,
+          wordId: this.word.id
+        },
+        {
+          lang: this.langCtrl.value,
+          wordId: wordToDel.id
+        }
+      )
+
+      message = `Successfully deleted translation ${this.word.word} -> ${wordToDel.word}`
+    } catch (err) {
+      message = err.message
+    }
+
+    this.snackBar.open(message, 'Close', {
+      duration: 5000
+    })
+  }
 }

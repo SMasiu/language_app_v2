@@ -24,6 +24,7 @@ import { Translate } from '../types/translate.types'
 import { translateByWordIdQuery } from '../queries/translate-by-word-id.query'
 import { getAllWordsQuery } from '../queries/get-all-words.query'
 import { deleteWordQuery } from '../queries/delete-word.query'
+import { deleteTranslationQuery } from '../queries/delete-translation.query'
 
 @Injectable({
   providedIn: 'root'
@@ -214,6 +215,25 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data.deleteWord)
+      )
+      .toPromise()
+  }
+
+  deleteTranslation(
+    word1: TranslationWordOptions,
+    word2: TranslationWordOptions
+  ): Promise<Translation> {
+    return this.apollo
+      .mutate<{ deleteTranslation: Translation }>({
+        mutation: deleteTranslationQuery,
+        variables: {
+          from: { ...word1 },
+          to: { ...word2 }
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.deleteTranslation)
       )
       .toPromise()
   }
