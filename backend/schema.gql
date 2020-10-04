@@ -66,6 +66,7 @@ input GetWordsParams {
 
 type Mutation {
   addWord(word: WordInput!, lang: String!): Word!
+  deleteWord(lang: String!, id: Int!): Word!
   addGroup(group: GroupInput!): Group!
   addTranslation(from: TranslationWordInput!, to: TranslationWordInput!): Translation!
   createTest(testParams: CreateTestInput!): Test!

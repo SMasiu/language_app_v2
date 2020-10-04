@@ -92,3 +92,13 @@ export class GetAllWordsCountArgs {
   @IsIn(availableLanguages)
   lang: string
 }
+
+@ArgsType()
+export class DeleteWordArgs {
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  lang: string
+
+  @Field(() => Int)
+  id: number
+}

@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { DatabaseService } from 'src/modules/database/services/database.service'
-import { WordArgs, GetAllWordsArgs, GetAllWordsCountArgs } from '../graphql/word.args'
+import {
+  WordArgs,
+  GetAllWordsArgs,
+  GetAllWordsCountArgs,
+  DeleteWordArgs
+} from '../graphql/word.args'
 import { WordModel, GetWordsGroupOptions } from '../types/word.types'
 import { GroupsService } from 'src/modules/groups/services/groups.service'
 import { Word } from '../graphql/word.type'
@@ -122,5 +127,25 @@ export class WordsService {
         [`${params.search}%`]
       )
     )[0]
+  }
+
+  async deleteWord({ id, lang }: DeleteWordArgs) {
+    const words = await this.database.query<Word>(
+      `
+      DELETE FROM words_${lang} WHERE id = $1 RETURNING *
+    `,
+      [id]
+    )
+
+    const word = words[0]
+
+    if (!word) {
+      throw new InternalServerErrorException()
+    }
+
+    return {
+      ...word,
+      lang
+    }
   }
 }
