@@ -4,6 +4,9 @@ import { take } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { Word } from 'src/app/types/word.types'
 import { Translate } from 'src/app/types/translate.types'
+import { FormControl } from '@angular/forms'
+import { LanguagesService } from 'src/app/services/languages.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-word-item',
@@ -13,7 +16,17 @@ import { Translate } from 'src/app/types/translate.types'
 export class WordItemComponent implements OnInit {
   word: Word
   translations: Translate
-  constructor(private route: ActivatedRoute, private apiService: ApiService) {}
+
+  langSub: Subscription
+  langCtrl: FormControl = new FormControl('')
+
+  displayedColumns: string[] = ['id', 'word', 'delete']
+
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    public languagesService: LanguagesService
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.pipe(take(1)).subscribe(async (params) => {
@@ -21,9 +34,12 @@ export class WordItemComponent implements OnInit {
       const id = parseInt(params.get('id'))
 
       this.word = await this.apiService.getWordById(lang, id)
-      console.log(this.word)
-      this.translations = await this.apiService.translateByWordId(id, lang, 'pl')
-      console.log(this.translations)
+
+      this.langSub = this.langCtrl.valueChanges.subscribe(async (translationLang: string) => {
+        this.translations = {
+          ...(await this.apiService.translateByWordId(id, lang, translationLang))
+        }
+      })
     })
   }
 }

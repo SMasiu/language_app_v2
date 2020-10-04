@@ -1,0 +1,32 @@
+.word-wrapper {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.word-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.word-heading {
+  font-size: 25px;
+}
+
+.word {
+  color: #c2185b;
+}
+
+.translations-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table {
+  width: 100%;
+}
+
+.action-btn {
+  margin-right: 10px;
+}
