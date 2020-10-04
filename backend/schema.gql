@@ -14,6 +14,10 @@ type Word {
   groups: [Group!]!
 }
 
+type CountType {
+  count: Int!
+}
+
 type TranslationWord {
   word: Word!
   lang: String!
@@ -40,6 +44,8 @@ type Test {
 type Query {
   getWordById(lang: String!, id: Int!): Word
   searchWords(lang: String!, search: String!): [Word!]!
+  getAllWords(paging: PagingArgs!, params: GetWordsParams!, lang: String!): [Word!]!
+  getAllWordsCount(params: GetWordsParams!, lang: String!): CountType!
   getGroupById(id: Int!): Group
   getAllGroups: [Group!]!
   getTranslationById(id: Int!, from: String!, to: String!): Translation
@@ -47,6 +53,15 @@ type Query {
   translateWordByWordId(from: String!, to: String!, wordId: Int!): Translate!
   getTestById(id: Int!): Test
   getAllTests: [Test!]!
+}
+
+input PagingArgs {
+  skip: Int = 0
+  limit: Int = 25
+}
+
+input GetWordsParams {
+  search: String!
 }
 
 type Mutation {

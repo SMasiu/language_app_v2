@@ -1,9 +1,16 @@
-import { Args, Mutation, Query, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql'
-import { WordArgs, SearchWordsArgs, GetWordByIdArgs } from '../graphql/word.args'
+import { Args, Mutation, Query, Resolver, ResolveField, Parent } from '@nestjs/graphql'
+import {
+  WordArgs,
+  SearchWordsArgs,
+  GetWordByIdArgs,
+  GetAllWordsArgs,
+  GetAllWordsCountArgs
+} from '../graphql/word.args'
 import { Word } from '../graphql/word.type'
 import { WordsService } from '../services/words.service'
 import { GroupsService } from 'src/modules/groups/services/groups.service'
 import { Group } from 'src/modules/groups/graphql/group.type'
+import { CountType } from 'src/common/count.type'
 
 @Resolver(() => Word)
 export class WordsResolver {
@@ -17,6 +24,16 @@ export class WordsResolver {
   @Query(() => [Word])
   async searchWords(@Args() { lang, search }: SearchWordsArgs) {
     return await this.wordsService.searchWords(lang, search)
+  }
+
+  @Query(() => [Word])
+  async getAllWords(@Args() args: GetAllWordsArgs) {
+    return await this.wordsService.getAllWords(args)
+  }
+
+  @Query(() => CountType)
+  async getAllWordsCount(@Args() args: GetAllWordsCountArgs) {
+    return await this.wordsService.getAllWordsCount(args)
   }
 
   @Mutation(() => Word)

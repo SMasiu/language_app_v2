@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DatabaseService } from 'src/modules/database/services/database.service'
-import { WordArgs } from '../graphql/word.args'
+import { WordArgs, GetAllWordsArgs, GetAllWordsCountArgs } from '../graphql/word.args'
 import { WordModel, GetWordsGroupOptions } from '../types/word.types'
 import { GroupsService } from 'src/modules/groups/services/groups.service'
 import { Word } from '../graphql/word.type'
@@ -69,7 +69,7 @@ export class WordsService {
     `,
         [`${search}%`]
       )
-    ).map((w) => ({ ...w, lang }))
+    ).map(w => ({ ...w, lang }))
   }
 
   async getWordsGroup({ skip, limit, groups }: GetWordsGroupOptions): Promise<{ id: number }[]> {
@@ -94,5 +94,31 @@ export class WordsService {
     `,
       args
     )
+  }
+
+  async getAllWords({ paging, params, lang }: GetAllWordsArgs) {
+    return (
+      await this.database.query<WordModel>(
+        `
+      SELECT *
+      FROM words_${lang}
+      WHERE word LIKE $1
+      lIMIT $2
+      OFFSET $3;
+    `,
+        [`${params.search}%`, paging.limit, paging.skip]
+      )
+    ).map(w => ({ ...w, lang }))
+  }
+
+  async getAllWordsCount({ params, lang }: GetAllWordsCountArgs) {
+    return await this.database.query<{ count: number }>(
+      `
+        SELECT COUNT(*)
+        FROM words_${lang}
+        WHERE word LIKE 's%'
+      `,
+      [`${params.search}%`]
+    )[0]
   }
 }

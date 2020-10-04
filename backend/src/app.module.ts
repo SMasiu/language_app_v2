@@ -12,6 +12,9 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public')
+    }),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
       debug: true, //set false on production
@@ -25,9 +28,6 @@ import { ServeStaticModule } from '@nestjs/serve-static'
           'request.credentials': 'same-origin'
         }
       }
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public')
     }),
     DatabaseModule,
     WordsModule,

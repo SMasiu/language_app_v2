@@ -10,6 +10,7 @@ import {
 } from 'class-validator'
 import { availableLanguages } from 'src/modules/language/available-languages'
 import { trimToLowerCase } from 'src/common/transfrom'
+import { PagingArgs } from 'src/common/paging.args'
 
 @InputType()
 export class WordInput {
@@ -19,7 +20,7 @@ export class WordInput {
   word: string
 
   @Field(() => [Int], { nullable: true })
-  @ValidateIf((o) => o.groups !== null && o.groups !== undefined)
+  @ValidateIf(o => o.groups !== null && o.groups !== undefined)
   @IsNotEmpty({ each: true })
   @ArrayUnique()
   groups: number[]
@@ -55,4 +56,39 @@ export class GetWordByIdArgs {
 
   @Field(() => Int)
   id: number
+}
+
+@InputType()
+export class GetWordsParams {
+  @Field(() => String)
+  search: string
+}
+
+@ArgsType()
+export class GetAllWordsArgs {
+  @Field(() => PagingArgs)
+  @Type(() => PagingArgs)
+  @ValidateNested({ each: true })
+  paging: PagingArgs
+
+  @Field(() => GetWordsParams)
+  @Type(() => GetWordsParams)
+  @ValidateNested({ each: true })
+  params: GetWordsParams
+
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  lang: string
+}
+
+@ArgsType()
+export class GetAllWordsCountArgs {
+  @Field(() => GetWordsParams)
+  @Type(() => GetWordsParams)
+  @ValidateNested({ each: true })
+  params: GetWordsParams
+
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  lang: string
 }
