@@ -16,7 +16,7 @@ export class DatabaseProviderService {
     await this.addGroupsTable()
     await this.addTestsTable()
 
-    this.languageService.avaliableLanguages.forEach(async (lang) => {
+    this.languageService.avaliableLanguages.forEach(async lang => {
       await this.addWordsTable(lang)
       await this.addWordGroupsTable(lang)
     })
@@ -27,7 +27,7 @@ export class DatabaseProviderService {
   }
 
   async connectToDatabase(): Promise<boolean> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const timer = setInterval(async () => {
         try {
           await this.createPool()
@@ -68,7 +68,7 @@ export class DatabaseProviderService {
     return this.pool.query(`
       CREATE TABLE IF NOT EXISTS groups (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(25) NOT NULL UNIQUE
+        name VARCHAR(50) NOT NULL UNIQUE
       )
   `)
   }
@@ -77,7 +77,7 @@ export class DatabaseProviderService {
     return this.pool.query(`
         CREATE TABLE IF NOT EXISTS words_${lang} (
           id SERIAL PRIMARY KEY,
-          word VARCHAR(25) NOT NULL UNIQUE
+          word VARCHAR(50) NOT NULL UNIQUE
         )
       `)
   }

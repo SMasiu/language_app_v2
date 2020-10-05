@@ -67,7 +67,7 @@ export class AddWordComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      word: new FormControl(this.wordInp, [Validators.required, Validators.maxLength(25)]),
+      word: new FormControl(this.wordInp, [Validators.required, Validators.maxLength(50)]),
       lang: new FormControl(this.langInp || '')
     })
 

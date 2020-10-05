@@ -7,7 +7,7 @@ import { trimToLowerCase } from 'src/common/transfrom'
 export class GroupInput {
   @Field(() => String)
   @Transform(trimToLowerCase)
-  @MaxLength(25)
+  @MaxLength(50)
   name: string
 }
 

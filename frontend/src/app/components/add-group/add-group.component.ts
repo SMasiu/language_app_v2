@@ -17,7 +17,7 @@ export class AddGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.maxLength(25)])
+      name: new FormControl('', [Validators.required, Validators.maxLength(50)])
     })
   }
 

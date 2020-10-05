@@ -15,7 +15,7 @@ import { PagingArgs } from 'src/common/paging.args'
 @InputType()
 export class WordInput {
   @Field(() => String)
-  @MaxLength(25)
+  @MaxLength(50)
   @Transform(trimToLowerCase)
   word: string
 
