@@ -27,7 +27,8 @@ import { SolveTestComponent } from './components/solve-test/solve-test.component
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { WordsListComponent } from './components/words-list/words-list.component'
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { WordItemComponent } from './components/word-item/word-item.component'
+import { WordItemComponent } from './components/word-item/word-item.component';
+import { UpdateWordComponent } from './components/update-word/update-word.component'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { WordItemComponent } from './components/word-item/word-item.component'
     TestsListComponent,
     SolveTestComponent,
     WordsListComponent,
-    WordItemComponent
+    WordItemComponent,
+    UpdateWordComponent
   ],
   imports: [
     BrowserModule,

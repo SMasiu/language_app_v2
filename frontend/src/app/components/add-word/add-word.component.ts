@@ -17,6 +17,9 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { Word } from 'src/app/types/word.types'
 import { Subscription } from 'rxjs'
+import { ActivatedRoute, Router } from '@angular/router'
+import { table } from 'console'
+import { take, map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-add-word',
@@ -29,6 +32,11 @@ export class AddWordComponent implements OnInit {
 
   @Output()
   create: EventEmitter<Word> = new EventEmitter()
+
+  @Input()
+  updateMode: boolean = false
+
+  updatingWord: Word
 
   @Input()
   langInp: string
@@ -52,6 +60,8 @@ export class AddWordComponent implements OnInit {
     private apiService: ApiService,
     private snackBar: MatSnackBar,
     private groupsService: GroupsService,
+    private route: ActivatedRoute,
+    private router: Router,
     public languagesService: LanguagesService
   ) {}
 
@@ -69,9 +79,28 @@ export class AddWordComponent implements OnInit {
       this.groups = [...g]
       this.filtredGroups = [...g]
     })
+
+    if (this.updateMode) {
+      this.route.paramMap
+        .pipe(
+          take(1),
+          map((params) => ({ id: parseInt(params.get('id')), lang: params.get('lang') }))
+        )
+        .subscribe(async ({ id, lang }) => {
+          this.updatingWord = await this.apiService.getWordById(lang, id)
+
+          this.form.setValue({ lang, word: this.updatingWord.word })
+
+          this.selectedGroups = [...this.updatingWord.groups]
+        })
+    }
   }
 
-  async handleSubmit() {
+  handleSubmit() {
+    this.updateMode ? this.handleUpdateWord() : this.handleAddWord()
+  }
+
+  async handleAddWord() {
     let action: string
     const { word, lang } = this.form.value
     const lastLang = lang
@@ -95,6 +124,29 @@ export class AddWordComponent implements OnInit {
     this.snackBar.open(action, 'Close', {
       duration: 5000
     })
+  }
+
+  async handleUpdateWord() {
+    const { word, lang } = this.form.value
+
+    let message: string
+
+    try {
+      const updatedWord = await this.apiService.updateWord(lang, this.updatingWord.id, {
+        word,
+        groups: this.selectedGroups.length ? this.selectedGroups.map((g) => g.id) : null
+      })
+
+      message = `Successfully updated word: ${updatedWord.word}`
+    } catch (err) {
+      message = `Something goes wrong: ${err.message}`
+    }
+
+    this.snackBar.open(message, 'Close', {
+      duration: 5000
+    })
+
+    this.router.navigateByUrl(`/words/${lang}/${this.updatingWord.id}`)
   }
 
   handleGroupRemove(group: Group) {

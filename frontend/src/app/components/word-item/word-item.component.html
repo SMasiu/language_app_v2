@@ -7,7 +7,12 @@
       <button mat-mini-fab color="warn" class="action-btn" (click)="handleDeleteWord()">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-mini-fab color="primary" class="action-btn">
+      <button
+        mat-mini-fab
+        color="primary"
+        class="action-btn"
+        [routerLink]="['/words/update', word.lang, word.id]"
+      >
         <mat-icon>create</mat-icon>
       </button>
     </div>

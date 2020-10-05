@@ -8,6 +8,7 @@ import { TestsListComponent } from './components/tests-list/tests-list.component
 import { SolveTestComponent } from './components/solve-test/solve-test.component'
 import { WordsListComponent } from './components/words-list/words-list.component'
 import { WordItemComponent } from './components/word-item/word-item.component'
+import { UpdateWordComponent } from './components/update-word/update-word.component'
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'words/add',
     component: AddWordComponent
+  },
+  {
+    path: 'words/update/:lang/:id',
+    component: UpdateWordComponent
   },
   {
     path: 'translations/add',

@@ -25,6 +25,7 @@ import { translateByWordIdQuery } from '../queries/translate-by-word-id.query'
 import { getAllWordsQuery } from '../queries/get-all-words.query'
 import { deleteWordQuery } from '../queries/delete-word.query'
 import { deleteTranslationQuery } from '../queries/delete-translation.query'
+import { updateWordQuery } from '../queries/update-word.query'
 
 @Injectable({
   providedIn: 'root'
@@ -234,6 +235,23 @@ export class ApiService {
       .pipe(
         take(1),
         map((r) => r.data.deleteTranslation)
+      )
+      .toPromise()
+  }
+
+  updateWord(lang: string, id: number, newWord: WordInput): Promise<Word> {
+    return this.apollo
+      .mutate<{ updateWord: Word }>({
+        mutation: updateWordQuery,
+        variables: {
+          lang,
+          id,
+          newWord: { ...newWord }
+        }
+      })
+      .pipe(
+        take(1),
+        map((r) => r.data.updateWord)
       )
       .toPromise()
   }
