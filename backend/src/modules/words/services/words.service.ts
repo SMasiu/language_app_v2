@@ -4,7 +4,8 @@ import {
   WordArgs,
   GetAllWordsArgs,
   GetAllWordsCountArgs,
-  DeleteWordArgs
+  DeleteWordArgs,
+  UpdateWordArgs
 } from '../graphql/word.args'
 import { WordModel, GetWordsGroupOptions } from '../types/word.types'
 import { GroupsService } from 'src/modules/groups/services/groups.service'
@@ -141,6 +142,31 @@ export class WordsService {
 
     if (!word) {
       throw new InternalServerErrorException()
+    }
+
+    return {
+      ...word,
+      lang
+    }
+  }
+
+  async updateWord({ id, lang, newWord }: UpdateWordArgs) {
+    const word: Word = (
+      await this.database.query<Word>(
+        `
+        UPDATE words_${lang}
+        SET word = $2
+        WHERE id = $1
+        RETURNING *
+      `,
+        [id, newWord.word]
+      )
+    )[0]
+
+    await this.groupService.removeAllGroupsFromWord(lang, id)
+
+    if (newWord.groups?.length) {
+      await this.groupService.addGroupsToWord(lang, id, [...newWord.groups])
     }
 
     return {

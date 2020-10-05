@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { GroupInput } from '../graphql/group.args'
 import { DatabaseService } from 'src/modules/database/services/database.service'
 import { GroupModel } from '../types/group.types'
+import { Group } from '../graphql/group.type'
 
 @Injectable()
 export class GroupsService {
@@ -57,5 +58,17 @@ export class GroupsService {
       return this.database.query(query, args)
     }
     return []
+  }
+
+  async removeAllGroupsFromWord(lang: string, wordId: number) {
+    return await this.database.query<Group>(
+      `
+      DELETE 
+      FROM word_groups_${lang}
+      WHERE word_id = $1
+      RETURNING *
+    `,
+      [wordId]
+    )
   }
 }

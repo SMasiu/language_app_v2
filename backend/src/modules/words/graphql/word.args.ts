@@ -39,6 +39,21 @@ export class WordArgs {
 }
 
 @ArgsType()
+export class UpdateWordArgs {
+  @Field(() => String)
+  @IsIn(availableLanguages)
+  lang: string
+
+  @Field(() => Int)
+  id: number
+
+  @Field(() => WordInput)
+  @Type(() => WordInput)
+  @ValidateNested({ each: true })
+  newWord: WordInput
+}
+
+@ArgsType()
 export class SearchWordsArgs {
   @Field(() => String)
   @IsIn(availableLanguages)

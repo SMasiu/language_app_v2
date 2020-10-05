@@ -5,7 +5,8 @@ import {
   GetWordByIdArgs,
   GetAllWordsArgs,
   GetAllWordsCountArgs,
-  DeleteWordArgs
+  DeleteWordArgs,
+  UpdateWordArgs
 } from '../graphql/word.args'
 import { Word } from '../graphql/word.type'
 import { WordsService } from '../services/words.service'
@@ -45,6 +46,11 @@ export class WordsResolver {
   @Mutation(() => Word)
   async deleteWord(@Args() args: DeleteWordArgs) {
     return await this.wordsService.deleteWord(args)
+  }
+
+  @Mutation(() => Word)
+  async updateWord(@Args() args: UpdateWordArgs) {
+    return await this.wordsService.updateWord(args)
   }
 
   @ResolveField('groups', () => [Group])
