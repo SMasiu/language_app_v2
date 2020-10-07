@@ -62,8 +62,6 @@ export class SolveTestComponent implements OnInit {
 
     this.tryCounter++
 
-    console.log(translate)
-
     if (isValidAnswer) {
       this.lastAnswerResunt = true
       this.progressCurrent++
@@ -79,7 +77,6 @@ export class SolveTestComponent implements OnInit {
           this.wordsToSolve[this.currentWordIndex]
         )
       } else {
-        console.log('win')
         this.finished = true
       }
     } else {
@@ -95,6 +92,9 @@ export class SolveTestComponent implements OnInit {
         this.wordsToSolve[this.currentWordIndex]
       )
     }
+
+    console.log('words to solve len', this.wordsToSolve.length, [...this.wordsToSolve])
+    console.log('current word', this.currentWordIndex, { ...this.currentWord })
 
     this.form.controls.answer.setValue('')
   }

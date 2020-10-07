@@ -4,6 +4,7 @@ export interface WordModel {
 }
 
 export interface GetWordsGroupOptions {
+  langFrom: string
   groups: number[]
   skip: number
   limit: number

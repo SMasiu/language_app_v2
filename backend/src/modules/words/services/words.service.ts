@@ -78,19 +78,24 @@ export class WordsService {
     ).map(w => ({ ...w, lang }))
   }
 
-  async getWordsGroup({ skip, limit, groups }: GetWordsGroupOptions): Promise<{ id: number }[]> {
+  async getWordsGroup({
+    skip,
+    limit,
+    groups,
+    langFrom
+  }: GetWordsGroupOptions): Promise<{ id: number }[]> {
     const args: any[] = [skip, limit]
     const groupsExists = groups && groups.length
     groupsExists && args.push(`{${groups.toString()}}`)
     return this.database.query<{ id: number }>(
       `
       SELECT DISTINCT w.id
-      FROM public.words_en w
+      FROM public.words_${langFrom} w
       
       ${
         groupsExists
           ? `
-            FULL JOIN word_groups_en g ON w.id = g.word_id
+            FULL JOIN word_groups_${langFrom} g ON w.id = g.word_id
             WHERE group_id = ANY ($3::int[])
           `
           : ''
