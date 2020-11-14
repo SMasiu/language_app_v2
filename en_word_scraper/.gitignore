@@ -2,5 +2,6 @@
 /data.json
 /translated_data.json
 /scrape_data.json
+/choose_data.py
 /venv
 /.idea
