@@ -28,7 +28,7 @@ def main():
 
             action = input(f"Reject({reject.upper()}) / Accept({confirm.upper()}): ")
 
-            if action.lower() == confirm:
+            if not action or action.lower() == confirm:
                 end_item[1].append(translation)
 
             os.system('clear')
