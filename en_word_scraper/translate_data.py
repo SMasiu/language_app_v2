@@ -13,17 +13,24 @@ def load_data_from_file():
 
 
 def translate_data():
+    start = 0
+    end = 100
     data = load_data_from_file()
+
+    print(len(data))
+
     translator = Translator()
-    translations = translator.translate(data[900:], dest='pl', src='en')
+
+    translations = translator.translate(data[start:end], dest='pl', src='en')
     words = []
     i = 0
 
     for translation in translations:
-        words.append([data[i+900], []])
+        words.append([data[i + start], []])
+
         if translation.extra_data['all-translations']:
             for allTranslations in translation.extra_data['all-translations']:
-                for t in allTranslations[1]:
+                for t in allTranslations[1][:3]:
                     words[i][1].append(t)
         i += 1
 

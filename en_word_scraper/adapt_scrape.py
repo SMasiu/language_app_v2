@@ -6,16 +6,7 @@ import json
 # ----------------------------------------
 
 def modify_scrape_element(element):
-    ret = []
-
-    def clear_field(text):
-        for item in text.split(',')[0].split('-'):
-            ret.append(item)
-
-    clear_field(element['FIELD2'])
-    clear_field(element['FIELD3'])
-    clear_field(element['FIELD4'])
-    return ret
+    return [element]
 
 
 # ----------------------------------------
@@ -50,7 +41,9 @@ def save_adapted_data(json_data):
 def adapt_scrape():
     scrape_data = load_scrape()
     adapted_data = [modify_scrape_element(elem) for elem in scrape_data]
-    save_adapted_data(json.dumps([trim_whitespace(item) for sublist in adapted_data for item in sublist]))
+    data = list(set([trim_whitespace(item) for sublist in adapted_data for item in sublist]))
+    print(f'Data len: {len(data)}')
+    save_adapted_data(json.dumps(data))
 
 
 adapt_scrape()

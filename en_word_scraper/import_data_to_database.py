@@ -11,7 +11,7 @@ client = GraphqlClient(endpoint="http://localhost:8080/graphql")
 
 
 def load_translated_words():
-    with open('chosen_data.json') as file:
+    with open('translated_data.json') as file:
         return json.loads(file.read())
 
 
